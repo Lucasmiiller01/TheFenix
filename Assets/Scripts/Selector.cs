@@ -15,12 +15,19 @@ public class Selector : MonoBehaviour {
     [SerializeField]
     private GameObject movedObject;
 
+    [SerializeField]
+    private bool cooldown;
+    [SerializeField]
+    private float timeCollDown;
+
+
+
 
     // Use this for initialization
     void Start ()
     {
-	 
-	}
+        cooldown = false;
+    }
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.tag.Equals("Paper"))
@@ -42,6 +49,11 @@ public class Selector : MonoBehaviour {
         isSelect = true;
         Cursor.visible = false;
     }
+
+    private bool CoolDown()
+    {
+        return cooldown = false;
+    }
     void OnMouseUp()
     {
         isSelect = false;
@@ -55,7 +67,7 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(2).transform.position = this.transform.position;
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
-                  
+                        cooldown = true;
                     }
                     break;
                 case "Education":
@@ -63,7 +75,7 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(1).transform.position = this.transform.position;
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-            
+                        cooldown = true;
                     }
                     break;
                 case "Safety":
@@ -71,7 +83,8 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(0).transform.position = this.transform.position;
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-        
+                        cooldown = true;
+
                     }
                     break;
                 case "Stamp":
@@ -79,7 +92,7 @@ public class Selector : MonoBehaviour {
                         Debug.Log("Não está preenchida!!");
                     else
                         QuitScreen();
-
+                    
 
                     break;
                 default:
@@ -90,8 +103,9 @@ public class Selector : MonoBehaviour {
         }
             
     }
-    // Update is called once per frame
-    void Update () {
+
+    void Update ()
+    {
         if (isSelect)
         {
             if (movedObject != null)
@@ -106,6 +120,9 @@ public class Selector : MonoBehaviour {
             Destroy(paper);
             paper = null;
         }
+        if (cooldown)
+            Invoke("CoolDown", timeCollDown);
+        
     }
 
     private void FollowMouse()
