@@ -6,6 +6,7 @@ public class Selector : MonoBehaviour {
 
     private bool isSelect;
     private bool onPaper;
+    private bool onMouse;
     private bool quit;
     [SerializeField]
     private string myType; 
@@ -19,6 +20,9 @@ public class Selector : MonoBehaviour {
     private bool cooldown;
     [SerializeField]
     private float timeCollDown;
+
+    [SerializeField]
+    private GameController gameController;
 
 
 
@@ -44,21 +48,27 @@ public class Selector : MonoBehaviour {
             if(!quit) paper = null;
         }
     }
-    void OnMouseDown()
+    void OnMouseEnter()
     {
+        onMouse = true;
         isSelect = true;
         Cursor.visible = false;
     }
+    void OnMouseExit()
+    {
+        onMouse = false;
+    }
+
 
     private bool CoolDown()
     {
         return cooldown = false;
     }
-    void OnMouseUp()
+    void DropObject()
     {
         isSelect = false;
         Cursor.visible = true;
-        if (onPaper)
+        if (onPaper && !cooldown)
         {
             switch (myType)
             {
@@ -92,16 +102,16 @@ public class Selector : MonoBehaviour {
                         Debug.Log("Não está preenchida!!");
                     else
                         QuitScreen();
-                    
 
                     break;
                 default:
-                            
+
                     break;
             }
-            
+
         }
-            
+        else if (onPaper) Debug.Log("CoolDown");
+
     }
 
     void Update ()
@@ -119,10 +129,15 @@ public class Selector : MonoBehaviour {
         {
             Destroy(paper);
             paper = null;
+            gameController.OnCreate();
+            quit = false;
         }
         if (cooldown)
             Invoke("CoolDown", timeCollDown);
-        
+        if(onMouse && Input.GetMouseButtonDown(0))
+        {
+            DropObject();
+        }
     }
 
     private void FollowMouse()

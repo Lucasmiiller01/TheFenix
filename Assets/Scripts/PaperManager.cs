@@ -25,9 +25,9 @@ public class PaperManager : MonoBehaviour {
         {
             myCollider.enabled = false;
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5500, 0));
-            gamecontroller.props += myDoc.GetVector();
+            //gamecontroller.props += myDoc.GetVector();
             myDoc.SetUsed(1);
-            gamecontroller.verba -= myDoc.GetValue();
+            //gamecontroller.verba -= myDoc.GetValue();
 
         }
         else if (transform.GetChild(2).GetComponent<Image>().enabled && myDoc.GetUsed().Equals(0))
