@@ -36,7 +36,6 @@ public class GameController : MonoBehaviour
         seconds = 0;
         minutes = 0;
         InvokeRepeating("DecreaseProps", 10f, 10f);
-        //dayActual = 1;
     }
 
 	void Update ()
@@ -55,7 +54,6 @@ public class GameController : MonoBehaviour
                 created = false;
             }
         }
-
     }
 
     public void OnCreate()
