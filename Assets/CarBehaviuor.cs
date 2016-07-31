@@ -15,10 +15,10 @@ public class CarBehaviuor : MonoBehaviour {
                 this.GetComponent<SpriteRenderer>().color = Color.red;
                 break;
             case "Education":
-                this.GetComponent<SpriteRenderer>().color = Color.green;
+                this.GetComponent<SpriteRenderer>().color = Color.yellow;
                 break;
             case "Safety":
-                this.GetComponent<SpriteRenderer>().color = Color.yellow;
+                this.GetComponent<SpriteRenderer>().color = Color.black;
                 break;
             
         }
