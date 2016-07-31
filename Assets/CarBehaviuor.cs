@@ -5,6 +5,9 @@ public class CarBehaviuor : MonoBehaviour {
     private Rigidbody2D rb;
     public string direction;
     public string type;
+    [SerializeField]
+    private Sprite[] sprites;
+
 
     void Start()
     {
@@ -12,14 +15,15 @@ public class CarBehaviuor : MonoBehaviour {
         switch (type)
         {
             case "Cheers":
-                this.GetComponent<SpriteRenderer>().color = Color.red;
-                
+                this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        
                 break;
             case "Education":
                 this.GetComponent<SpriteRenderer>().color = Color.yellow;
                 break;
             case "Safety":
-                this.GetComponent<SpriteRenderer>().color = Color.black;
+                this.GetComponent<SpriteRenderer>().sprite = sprites[1];
+                this.GetComponent<Animator>().enabled = true;
                 break;
             
         }
@@ -30,12 +34,19 @@ public class CarBehaviuor : MonoBehaviour {
         if (direction != null)
         {
             if (direction.Equals("Left"))
-                if(transform.position.x > -6f)
+            {
+                if (transform.position.x > -6f)
                     rb.velocity = Vector2.left;
                 else Destroy(this.gameObject);
+                this.GetComponent<SpriteRenderer>().sortingOrder = 3;
+            }
+            
             else if (transform.position.x < 6f)
-                rb.velocity = Vector2.right;
-            else Destroy(this.gameObject); 
+            {
+               rb.velocity = Vector2.right;
+               this.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else Destroy(this.gameObject);
         }
         else Destroy(this.gameObject);
         
