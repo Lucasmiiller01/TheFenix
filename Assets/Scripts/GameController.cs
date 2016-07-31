@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private GameObject paper;
-    public Vector3 props = new Vector3(8, 8, 8);
+    public Vector3 props;
 
     void Start()
     {
@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
         seconds = 0;
         minutes = 0;
         InvokeRepeating("DecreaseProps", 10f, 10f);
+        props = new Vector3(Random.Range(5, 9), Random.Range(5, 9), Random.Range(5, 9));
     }
 
 	void Update ()
