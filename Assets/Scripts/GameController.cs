@@ -7,13 +7,14 @@ using MyExtensions;
 public class GameController : MonoBehaviour
 {
 
-    [SerializeField]
     private Text clock;
 
     private int seconds;
     private int minutes;
     public bool inGame;
     public bool isPick;
+    [SerializeField]
+    private GameObject game;
 
     /*[SerializeField]
     private int tempDay;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        clock = GameObject.Find("Scene_Game/Canvas/Text").GetComponent<Text>();
         inGame = true;
         seconds = 0;
         minutes = 0;
@@ -35,7 +37,7 @@ public class GameController : MonoBehaviour
         //dayActual = 1;
     }
 
-	void FixedUpdate ()
+	void Update ()
     {
 
         if (inGame)
@@ -44,10 +46,18 @@ public class GameController : MonoBehaviour
         }
 
     }
+
     public void OnCreate()
     {
-       Instantiate(paper);
-          
+       Instantiate(paper);  
+    }
+    public void Game(bool active)
+    {
+       if(active)
+            clock = GameObject.Find("Scene_Game/Canvas/Text").GetComponent<Text>();
+        else
+            clock = GameObject.Find("Scene_City/Canvas/Text").GetComponent<Text>();
+
     }
     public void DecreaseProps()
     {
