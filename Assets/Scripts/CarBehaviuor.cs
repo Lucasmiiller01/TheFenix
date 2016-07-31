@@ -19,7 +19,7 @@ public class CarBehaviuor : MonoBehaviour {
         
                 break;
             case "Education":
-                this.GetComponent<SpriteRenderer>().color = Color.yellow;
+                this.GetComponent<SpriteRenderer>().sprite = sprites[2];
                 break;
             case "Safety":
                 this.GetComponent<SpriteRenderer>().sprite = sprites[1];
