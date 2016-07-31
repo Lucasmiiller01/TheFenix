@@ -29,11 +29,7 @@ public class Selector : MonoBehaviour {
     {
         cooldown = false;
     }
- 
-    private bool CoolDown()
-    {
-        return cooldown = false;
-    }
+
    
     #region DropObject
     void DropObject()
@@ -83,10 +79,7 @@ public class Selector : MonoBehaviour {
                     break;
             }
         }
-        else if (onPaper)
-        {
-            this.GetComponent<SpriteRenderer>().color = new Color(64,64,64);
-        }
+       
 
     }
     #endregion
@@ -123,8 +116,8 @@ public class Selector : MonoBehaviour {
         if(quit && isMarked)
         {
             isMarked = false;
-            cooldown = true;
-           
+            cooldown = true; 
+            StartCoroutine(Block());
         }
 
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
@@ -136,9 +129,8 @@ public class Selector : MonoBehaviour {
             gameController.OnCreate();
             quit = false;
         }
-        if (cooldown)
-            Invoke("CoolDown", timeCollDown);
-   
+
+
     }
     #region RayCast
     void RayCast()
@@ -214,4 +206,12 @@ public class Selector : MonoBehaviour {
         return worldPos;
     }
     #endregion
+    IEnumerator Block()
+    {
+        this.GetComponent<SpriteRenderer>().color = new Color(0.65f, 0.65f, 0.65f, 1);
+        yield return new WaitForSeconds(timeCollDown);
+        cooldown = false;
+        this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+
+    }
 }
