@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     private int seconds;
     private int minutes;
     public bool inGame;
+    public bool isPick;
 
     /*[SerializeField]
     private int tempDay;

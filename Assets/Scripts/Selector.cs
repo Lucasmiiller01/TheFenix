@@ -12,9 +12,7 @@ public class Selector : MonoBehaviour {
     private string myType; 
     private GameObject paper;
     private Vector3 mousePos;
-
-    [SerializeField]
-    private GameObject movedObject;
+  
 
     [SerializeField]
     private bool cooldown;
@@ -24,7 +22,8 @@ public class Selector : MonoBehaviour {
     [SerializeField]
     private GameController gameController;
 
-
+    [SerializeField]
+    public static Vector3 auxProps;
 
 
     // Use this for initialization
@@ -32,42 +31,18 @@ public class Selector : MonoBehaviour {
     {
         cooldown = false;
     }
-    void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Paper"))
-        {
-            onPaper = true;
-            paper = coll.transform.gameObject;
-        }
-    }
-    void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Paper"))
-        {
-            onPaper = false;
-            if(!quit) paper = null;
-        }
-    }
-    void OnMouseEnter()
-    {
-        onMouse = true;
-        isSelect = true;
-        Cursor.visible = false;
-    }
-    void OnMouseExit()
-    {
-        onMouse = false;
-    }
-
-
+ 
     private bool CoolDown()
     {
         return cooldown = false;
     }
+   
+    #region DropObject
     void DropObject()
     {
         isSelect = false;
-        Cursor.visible = true;
+        gameController.isPick = false;
+        // Cursor.visible = true;
         if (onPaper && !cooldown)
         {
             switch (myType)
@@ -78,6 +53,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(2).transform.position = this.transform.position;
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
+                        auxProps += new Vector3(1, 0, 0);
                     }
                     break;
                 case "Education":
@@ -86,6 +62,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(1).transform.position = this.transform.position;
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
+                        auxProps += new Vector3(0, 1, 0);
                     }
                     break;
                 case "Safety":
@@ -94,6 +71,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(0).transform.position = this.transform.position;
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
+                        auxProps += new Vector3(0, 0, 1);
 
                     }
                     break;
@@ -101,28 +79,50 @@ public class Selector : MonoBehaviour {
                     if (paper != null && !paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled)
                         Debug.Log("Não está preenchida!!");
                     else
+                    {
                         QuitScreen();
+                        PropsAffect();
 
-                    break;
-                default:
-
+                    }
                     break;
             }
-
         }
         else if (onPaper) Debug.Log("CoolDown");
 
     }
+    #endregion
+    
+    #region OnTriggerEnterAndExit
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals("Paper"))
+        {
+            onPaper = true;
+            paper = coll.gameObject;
+
+        }
+    }
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals("Paper"))
+        {
+            onPaper = false;
+            if (!quit) paper = null;
+        }
+    }
+    #endregion
 
     void Update ()
     {
+        RayCast();
+
         if (isSelect)
         {
-            if (movedObject != null)
-                FollowMouse(movedObject);
-            else
-                FollowMouse();
+            FollowMouse();
+            if (Input.GetMouseButtonUp(0) && isSelect) DropObject();
+           
         }
+        
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
             if(paper.transform.position.x < 3f) paper.transform.position += Vector3.right;
         else if(myType.Equals("Stamp"))
@@ -134,28 +134,61 @@ public class Selector : MonoBehaviour {
         }
         if (cooldown)
             Invoke("CoolDown", timeCollDown);
-        if(onMouse && Input.GetMouseButtonDown(0))
-        {
-            DropObject();
-        }
+   
     }
+    #region RayCast
+    void RayCast()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector2 ray = getWorldPosition(Input.mousePosition);
+            RaycastHit2D[] hits;
+            hits = Physics2D.RaycastAll(ray, new Vector2(0, 0));
 
+            for (int i = 0; i < hits.Length; i++)
+            {
+                RaycastHit2D hit = hits[i];
+                if (hit.collider.gameObject != null)
+                {
+                    if (hit.collider != null && hit.collider.isTrigger && hit.collider.gameObject.Equals(this.gameObject) && !gameController.isPick)
+                    {
+                        isSelect = true;
+                        gameController.isPick = true;
+                    }
+                }
+
+                else
+                {
+                    isSelect = false;  
+                }
+            }
+        }
+
+    }
+    #endregion
+
+    #region FallowMouse
     private void FollowMouse()
     {
         mousePos = getWorldPosition(Input.mousePosition);
         this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
     }
+    #endregion
     private void QuitScreen()
     {
         if (paper != null) quit = true;
     }
 
-    private void FollowMouse(GameObject i)
+    private void PropsAffect()
     {
-        mousePos = getWorldPosition(Input.mousePosition);
-        i.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+        gameController.props += auxProps;
     }
 
+    private void FollowMouse(Transform i)
+    {
+        this.GetComponent<Rigidbody2D>().MovePosition(i.position);
+    }
+    #region GetWorldPosition
     // Following method calculates world's point from screen point as per camera's projection type
     public Vector3 getWorldPosition(Vector3 screenPos)
     {
@@ -173,4 +206,5 @@ public class Selector : MonoBehaviour {
         }
         return worldPos;
     }
+    #endregion
 }
