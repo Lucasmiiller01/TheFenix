@@ -6,24 +6,15 @@ using MyExtensions;
 
 public class GameController : MonoBehaviour
 {
-
     private Text clock;
-
     private int seconds;
     private int minutes;
-    public bool inGame;
+    private bool inGame;
     public bool isPick;
     public bool created;
     [SerializeField]
     private GameObject game;
     private GameObject gameObject;
-
-    /*[SerializeField]
-    private int tempDay;
-    //[SerializeField]
-    //private Text day;
-
-    private int dayActual;*/
 
     [SerializeField]
     private GameObject paper;
@@ -40,7 +31,6 @@ public class GameController : MonoBehaviour
 
 	void Update ()
     {
-
         if (inGame)
         {
             Time_();

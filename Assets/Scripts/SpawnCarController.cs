@@ -12,10 +12,6 @@ public class SpawnCarController : MonoBehaviour {
         StartCoroutine(CarSpawn());
     }
 	
-	void Update ()
-    {
-	    
-	}
     IEnumerator CarSpawn()
     {
         int random = Random.Range(0, 2);

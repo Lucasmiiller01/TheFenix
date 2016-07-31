@@ -9,11 +9,13 @@ public class Selector : MonoBehaviour {
 
     [SerializeField]
     private string myType; 
+
     private GameObject paper;
     private Vector3 mousePos;
 
     [SerializeField]
     private bool cooldown;
+
     [SerializeField]
     private float timeCollDown;
 
@@ -21,14 +23,11 @@ public class Selector : MonoBehaviour {
     private GameController gameController;
     public static Vector3 auxProps;
 
-
-    // Use this for initialization
     void Start ()
     {
         cooldown = false;
     }
 
-   
     #region DropObject
     void DropObject()
     {
