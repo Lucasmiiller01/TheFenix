@@ -13,6 +13,7 @@ public class CarBehaviuor : MonoBehaviour {
         {
             case "Cheers":
                 this.GetComponent<SpriteRenderer>().color = Color.red;
+                
                 break;
             case "Education":
                 this.GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -22,6 +23,7 @@ public class CarBehaviuor : MonoBehaviour {
                 break;
             
         }
+
     }
     void FixedUpdate ()
     {

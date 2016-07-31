@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SpawnCarController : MonoBehaviour {
     public bool rigth;
+    [SerializeField]
+    private int minValueActived;
     public GameObject car;
     [SerializeField]
     private GameController gameController;
@@ -10,6 +12,7 @@ public class SpawnCarController : MonoBehaviour {
     void Start ()
     {
         StartCoroutine(CarSpawn());
+        if (minValueActived.Equals(0)) minValueActived = 4;
     }
 	
     IEnumerator CarSpawn()
@@ -18,22 +21,27 @@ public class SpawnCarController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         if (rigth)
         {
-            GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
-            gameObject.transform.parent = this.transform;
-            gameObject.GetComponent<CarBehaviuor>().direction = "Left";
-            gameObject.GetComponent<CarBehaviuor>().type = "Cheers";
+            if(gameController.props.x > minValueActived)
+            {
+                GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
+                gameObject.transform.parent = this.transform;
+                gameObject.GetComponent<CarBehaviuor>().direction = "Left";
+                gameObject.GetComponent<CarBehaviuor>().type = "Cheers";
+            }
         }
 
         else
         {
-
-            GameObject gameObject = (GameObject)Instantiate(car, this.transform.position, car.transform.rotation);
-            gameObject.transform.parent = this.transform;
-            gameObject.GetComponent<CarBehaviuor>().direction = "Rigth";
-            gameObject.GetComponent<CarBehaviuor>().type = "Education";
+            if (gameController.props.y > minValueActived)
+            {
+                GameObject gameObject = (GameObject)Instantiate(car, this.transform.position, car.transform.rotation);
+                gameObject.transform.parent = this.transform;
+                gameObject.GetComponent<CarBehaviuor>().direction = "Rigth";
+                gameObject.GetComponent<CarBehaviuor>().type = "Education";
+            }
         }
         yield return new WaitForSeconds(1f);
-        if(random.Equals(0) && rigth)
+        if(random.Equals(0) && rigth && gameController.props.z > minValueActived)
         {
             
             GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
@@ -42,7 +50,7 @@ public class SpawnCarController : MonoBehaviour {
             gameObject.GetComponent<CarBehaviuor>().type = "Safety";
             
         }
-        else if(!rigth)
+        else if(!rigth && gameController.props.z > minValueActived)
         {
             GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
             gameObject.transform.parent = this.transform;
