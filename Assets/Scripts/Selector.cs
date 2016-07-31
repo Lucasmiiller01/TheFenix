@@ -124,7 +124,7 @@ public class Selector : MonoBehaviour {
         }
         
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
-            if(paper.transform.position.x < 3f) paper.transform.position += Vector3.right;
+            if(paper.transform.position.x < 3f) paper.transform.position += new Vector3(0.05f,0,0);
         else if(myType.Equals("Stamp"))
         {
             Destroy(paper);
