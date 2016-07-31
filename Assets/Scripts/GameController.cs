@@ -13,8 +13,10 @@ public class GameController : MonoBehaviour
     private int minutes;
     public bool inGame;
     public bool isPick;
+    public bool created;
     [SerializeField]
     private GameObject game;
+    private GameObject gameObject;
 
     /*[SerializeField]
     private int tempDay;
@@ -44,13 +46,23 @@ public class GameController : MonoBehaviour
         {
             Time_();
         }
+        if (gameObject != null && created.Equals(true))
+        {
+            if(gameObject.transform.position.x < 0.5f)
+                gameObject.transform.position += new Vector3(0.1f,0,0);
+            else
+            {
+                created = false;
+            }
+        }
 
     }
 
     public void OnCreate()
     {
-       GameObject gameObject = (GameObject) Instantiate(paper);
+       gameObject = (GameObject) Instantiate(paper, new Vector3(-3,0,0), paper.transform.rotation);
        gameObject.transform.parent = game.transform;
+       created = true;
     }
     public void Game(bool active)
     {
