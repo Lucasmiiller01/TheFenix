@@ -4,10 +4,8 @@ using UnityEngine.UI;
 
 public class Selector : MonoBehaviour {
 
-    private bool isSelect;
-    private bool onPaper;
-    private bool onMouse;
-    private bool quit;
+    private bool isSelect, onPaper, isMarked;
+    public static bool quit;
     [SerializeField]
     private string myType; 
     private GameObject paper;
@@ -43,7 +41,7 @@ public class Selector : MonoBehaviour {
         isSelect = false;
         gameController.isPick = false;
         // Cursor.visible = true;
-        if (onPaper && !cooldown)
+        if (onPaper && !cooldown && !quit)
         {
             switch (myType)
             {
@@ -52,8 +50,8 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(2).transform.position = this.transform.position;
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
-                        cooldown = true;
                         auxProps = new Vector3(1, auxProps.y, auxProps.z);
+                        isMarked = true;
                     }
                     break;
                 case "Education":
@@ -61,8 +59,8 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(1).transform.position = this.transform.position;
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-                        cooldown = true;
                         auxProps = new Vector3(auxProps.x, 1, auxProps.z);
+                        isMarked = true;
                     }
                     break;
                 case "Safety":
@@ -70,9 +68,8 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(0).transform.position = this.transform.position;
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-                        cooldown = true;
                         auxProps = new Vector3(auxProps.x, auxProps.y, 1);
-
+                        isMarked = true;
                     }
                     break;
                 case "Stamp":
@@ -82,12 +79,14 @@ public class Selector : MonoBehaviour {
                     {
                         QuitScreen();
                         PropsAffect();
-
                     }
                     break;
             }
         }
-        else if (onPaper) Debug.Log("CoolDown");
+        else if (onPaper)
+        {
+            this.GetComponent<SpriteRenderer>().color = new Color(64,64,64);
+        }
 
     }
     #endregion
@@ -115,16 +114,21 @@ public class Selector : MonoBehaviour {
     void Update ()
     {
         RayCast();
-
         if (isSelect)
         {
             FollowMouse();
-            if (Input.GetMouseButtonUp(0) && isSelect) DropObject();
+            if (Input.GetMouseButtonUp(0)) DropObject();
            
         }
-        
+        if(quit && isMarked)
+        {
+            isMarked = false;
+            cooldown = true;
+           
+        }
+
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
-            if(paper.transform.position.x < 3f) paper.transform.position += new Vector3(0.05f,0,0);
+            if(paper.transform.position.x < 6f) paper.transform.position += new Vector3(0.05f,0,0);
         else if(myType.Equals("Stamp"))
         {
             Destroy(paper);
@@ -177,12 +181,14 @@ public class Selector : MonoBehaviour {
     private void QuitScreen()
     {
         if (paper != null) quit = true;
+       
     }
 
     private void PropsAffect()
     {
         gameController.props += auxProps;
         auxProps = Vector3.zero;
+      
     }
 
     private void FollowMouse(Transform i)

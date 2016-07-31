@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
 
     public void OnCreate()
     {
-       GameObject gameObject = (GameObject)Instantiate(paper);
+       GameObject gameObject = (GameObject) Instantiate(paper);
        gameObject.transform.parent = game.transform;
     }
     public void Game(bool active)
