@@ -22,7 +22,7 @@ public class Selector : MonoBehaviour {
     [SerializeField]
     private GameController gameController;
 
-    [SerializeField]
+ 
     public static Vector3 auxProps;
 
 
@@ -53,7 +53,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(2).transform.position = this.transform.position;
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
-                        auxProps += new Vector3(1, 0, 0);
+                        auxProps = new Vector3(1, auxProps.y, auxProps.z);
                     }
                     break;
                 case "Education":
@@ -62,7 +62,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(1).transform.position = this.transform.position;
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
-                        auxProps += new Vector3(0, 1, 0);
+                        auxProps = new Vector3(auxProps.x, 1, auxProps.z);
                     }
                     break;
                 case "Safety":
@@ -71,7 +71,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(0).transform.position = this.transform.position;
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
                         cooldown = true;
-                        auxProps += new Vector3(0, 0, 1);
+                        auxProps = new Vector3(auxProps.x, auxProps.y, 1);
 
                     }
                     break;
@@ -182,6 +182,7 @@ public class Selector : MonoBehaviour {
     private void PropsAffect()
     {
         gameController.props += auxProps;
+        auxProps = Vector3.zero;
     }
 
     private void FollowMouse(Transform i)
