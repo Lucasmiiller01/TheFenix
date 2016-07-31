@@ -6,11 +6,11 @@ public class Selector : MonoBehaviour {
 
     private bool isSelect, onPaper, isMarked;
     public static bool quit;
+
     [SerializeField]
     private string myType; 
     private GameObject paper;
     private Vector3 mousePos;
-  
 
     [SerializeField]
     private bool cooldown;
@@ -19,8 +19,6 @@ public class Selector : MonoBehaviour {
 
     [SerializeField]
     private GameController gameController;
-
- 
     public static Vector3 auxProps;
 
 
@@ -107,11 +105,11 @@ public class Selector : MonoBehaviour {
     void Update ()
     {
         RayCast();
+
         if (isSelect)
         {
             FollowMouse();
             if (Input.GetMouseButtonUp(0)) DropObject();
-           
         }
         if(quit && isMarked)
         {
@@ -129,7 +127,6 @@ public class Selector : MonoBehaviour {
             gameController.OnCreate();
             quit = false;
         }
-
 
     }
     #region RayCast
@@ -159,7 +156,6 @@ public class Selector : MonoBehaviour {
                 }
             }
         }
-
     }
     #endregion
 
@@ -206,6 +202,7 @@ public class Selector : MonoBehaviour {
         return worldPos;
     }
     #endregion
+
     IEnumerator Block()
     {
         this.GetComponent<SpriteRenderer>().color = new Color(0.65f, 0.65f, 0.65f, 1);
