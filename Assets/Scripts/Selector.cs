@@ -112,9 +112,11 @@ public class Selector : MonoBehaviour {
         }
         if(quit && isMarked)
         {
+            Debug.LogWarning(gameObject.name);
             isMarked = false;
-            cooldown = true; 
-            StartCoroutine(Block());
+            cooldown = true;
+            Invoke("Block", timeCollDown);
+            this.GetComponent<SpriteRenderer>().color = new Color(0.65f, 0.65f, 0.65f, 1);
         }
 
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
@@ -202,12 +204,9 @@ public class Selector : MonoBehaviour {
     }
     #endregion
 
-    IEnumerator Block()
+    private void Block()
     {
-        this.GetComponent<SpriteRenderer>().color = new Color(0.65f, 0.65f, 0.65f, 1);
-        yield return new WaitForSeconds(timeCollDown);
         cooldown = false;
         this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-
     }
 }
