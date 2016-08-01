@@ -67,7 +67,6 @@ public class Selector : MonoBehaviour {
                     break;
                 case "Stamp":
                     if (paper != null && !paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled)
-                        Debug.Log("Não está preenchida!!");
                     else
                     {
                         QuitScreen();
