@@ -23,6 +23,7 @@ public class Selector : MonoBehaviour {
     [SerializeField]
     private GameController gameController;
     public static Vector3 auxProps;
+    public static float multCooldown;
 
     void Start ()
     {
@@ -47,6 +48,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
                         auxProps = new Vector3(Random.Range(1,3), auxProps.y, auxProps.z);
                         isMarked = true;
+                        multCooldown++;
                     }
                     break;
                 case "Education":
@@ -56,6 +58,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
                         auxProps = new Vector3(auxProps.x, Random.Range(1, 3), auxProps.z);
                         isMarked = true;
+                        multCooldown++;
                     }
                     break;
                 case "Safety":
@@ -65,6 +68,7 @@ public class Selector : MonoBehaviour {
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
                         auxProps = new Vector3(auxProps.x, auxProps.y, Random.Range(1, 3));
                         isMarked = true;
+                        multCooldown++;
                     }
                     break;
                 case "Stamp":
@@ -119,7 +123,7 @@ public class Selector : MonoBehaviour {
         {
             isMarked = false;
             cooldown = true;
-            Invoke("Block", timeCollDown);
+            Invoke("Block", timeCollDown * multCooldown);
             this.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1);
         }
 
@@ -132,8 +136,8 @@ public class Selector : MonoBehaviour {
             paper = null;
             gameController.OnCreate();
             quit = false;
+            multCooldown = 0;
         }
-
     }
     #region RayCast
     void RayCast()
@@ -175,14 +179,12 @@ public class Selector : MonoBehaviour {
     private void QuitScreen()
     {
         if (paper != null) quit = true;
-       
     }
 
     private void PropsAffect()
     {
         gameController.props += auxProps;
         auxProps = Vector3.zero;
-      
     }
 
     private void FollowMouse(Transform i)
