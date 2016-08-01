@@ -105,7 +105,8 @@ public class Selector : MonoBehaviour {
 
     void Update ()
     {
-        RayCast();
+        if(!cooldown)
+            RayCast();
 
         if (isSelect && !cooldown)
         {
