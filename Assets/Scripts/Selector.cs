@@ -12,6 +12,7 @@ public class Selector : MonoBehaviour {
 
     private GameObject paper;
     private Vector3 mousePos;
+    private Vector3 inicialPos;
 
     [SerializeField]
     private bool cooldown;
@@ -25,7 +26,8 @@ public class Selector : MonoBehaviour {
 
     void Start ()
     {
-        cooldown = false;
+        cooldown = false;        
+        inicialPos = this.transform.position;
     }
 
     #region DropObject
@@ -110,7 +112,9 @@ public class Selector : MonoBehaviour {
             FollowMouse();
             if (Input.GetMouseButtonUp(0)) DropObject();
         }
-        if(quit && isMarked)
+        if(!isSelect)
+            this.transform.position = Vector2.Lerp(this.transform.position, inicialPos, 0.05f);
+        if (quit && isMarked)
         {
             isMarked = false;
             cooldown = true;
@@ -153,7 +157,7 @@ public class Selector : MonoBehaviour {
 
                 else
                 {
-                    isSelect = false;  
+                    isSelect = false;
                 }
             }
         }
