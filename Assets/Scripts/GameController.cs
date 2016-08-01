@@ -55,6 +55,9 @@ public class GameController : MonoBehaviour
     public void DecreaseProps()
     {
         props -= new Vector3(1, 1, 1);
+        if (props.x < 0) props.x = 0;
+        if (props.y < 0) props.y = 0;
+        if (props.z < 0) props.z= 0;
     }
 
     private void Timer()

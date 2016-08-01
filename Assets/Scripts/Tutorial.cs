@@ -20,10 +20,12 @@ public class Tutorial : MonoBehaviour
     private Text[] textBox;
     [SerializeField]
     private GameObject[] scenes;
+    [SerializeField]
+    private GameController gameController;
     private int actual;
     private int actualText;
     private bool inTuto;
-    private byte[] quests;
+    private byte[] quests; float media;
     // Use this for initialization
     void Start ()
     {
@@ -40,53 +42,70 @@ public class Tutorial : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (!inTuto)
         {
-            if (actual != 8 && quests[0] != 1 && inTuto)
+            media = (gameController.props.x + gameController.props.y + gameController.props.z) / 3;
+            print(media);
+            if (media >= 8 && myImage.sprite != sprites[2])
+                myImage.sprite = sprites[2];
+            else if (myImage.sprite != sprites[2] && media <= 8 && media >= 6)
+                myImage.sprite = sprites[2];
+            else if (myImage.sprite != sprites[0] && media < 6 && media >= 3)
+                myImage.sprite = sprites[0];
+            else if (myImage.sprite != sprites[1] && media < 3)
+                myImage.sprite = sprites[1];
+        }
+        else
+        {
+            if (Input.GetMouseButtonUp(0))
             {
+                if (actual != 8 && quests[0] != 1)
+                {
+                    actual++;
+                    if (actual.Equals(4))
+                    {
+                        ballons[1].SetActive(false);
+                        ballons[2].SetActive(true);
+                        myImage.sprite = sprites[2];
+                        actualText = 2;
+                    }
+                    else if (actual.Equals(8))
+                    {
+                        textBox[0].text = textsAux[1];
+
+                    }
+                    else if (actual.Equals(10) && quests[1] != 2)
+                    {
+                        ballons[1].SetActive(false);
+                        ballons[2].SetActive(false);
+                        actual--;
+                        textBox[0].text = textsAux[2];
+                        quests[1] = 1;
+
+                    }
+                    else if (actual.Equals(13))
+                    {
+                        ballons[0].SetActive(false);
+                        ballons[1].SetActive(false);
+                        ballons[2].SetActive(false);
+                        myImage.sprite = sprites[0];
+                        actual--; inTuto = false;
+
+                    }
+                    ActualizeTutorial();
+                }
+
+            }
+            if (quests[0].Equals(1))
+                quests[0] = 2;
+            else if (quests[1].Equals(1) && Selector.quit)
+            {
+                quests[1] = 2;
                 actual++;
-                if (actual.Equals(4))
-                {
-                    ballons[1].SetActive(false);
-                    ballons[2].SetActive(true);
-                    myImage.sprite = sprites[2];
-                    actualText = 2;
-                }
-                else if (actual.Equals(8))
-                {
-                    textBox[0].text = textsAux[1];
-
-                }
-                else if (actual.Equals(10) && quests[1] != 2)
-                {
-                    ballons[1].SetActive(false);
-                    ballons[2].SetActive(false);
-                    actual--;
-                    textBox[0].text = textsAux[2];
-                    quests[1] = 1;
-
-                }
-                else if(actual.Equals(13))
-                {
-                    ballons[0].SetActive(false);
-                    ballons[1].SetActive(false);
-                    ballons[2].SetActive(false);
-                    actual--; inTuto = false;
-
-                }
+                ballons[1].SetActive(true);
+                textBox[0].text = textsAux[0];
                 ActualizeTutorial();
             }
-
-        }
-        if (quests[0].Equals(1))
-            quests[0] = 2;
-        else if (quests[1].Equals(1) && Selector.quit)
-        {
-            quests[1] = 2;
-            actual++;
-            ballons[1].SetActive(true);
-            textBox[0].text = textsAux[0];
-            ActualizeTutorial();
         }
 
     }
