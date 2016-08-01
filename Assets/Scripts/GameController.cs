@@ -37,8 +37,8 @@ public class GameController : MonoBehaviour
     {
         if (instancePaper != null && created.Equals(true))
         {
-            if(instancePaper.transform.position.x < 0.5f)
-                instancePaper.transform.position += new Vector3(0.1f,0,0);
+            if(instancePaper.transform.position.x < 0f)
+                instancePaper.transform.position = Vector2.Lerp(instancePaper.transform.position, new Vector2(0, 1), 0.1f);
             else
             {
                 created = false;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
 
     public void OnCreate()
     {
-       instancePaper = (GameObject) Instantiate(paper, new Vector3(-3,0,0), paper.transform.rotation);
+       instancePaper = (GameObject) Instantiate(paper, new Vector3(-20,1,0), paper.transform.rotation);
        instancePaper.transform.parent = game.transform;
        created = true;
     }
