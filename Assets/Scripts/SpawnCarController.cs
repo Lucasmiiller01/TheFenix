@@ -8,6 +8,8 @@ public class SpawnCarController : MonoBehaviour {
     public GameObject car;
     [SerializeField]
     private GameController gameController;
+    [SerializeField]
+    private int waitTime;
 
     void Start ()
     {
@@ -15,6 +17,10 @@ public class SpawnCarController : MonoBehaviour {
         if (minValueActived.Equals(0)) minValueActived = 4;
     }
 	
+    void FixedUpdate()
+    {
+
+    }
     IEnumerator CarSpawn()
     {
         int random = Random.Range(0, 2);

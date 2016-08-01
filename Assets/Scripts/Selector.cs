@@ -105,14 +105,13 @@ public class Selector : MonoBehaviour {
     {
         RayCast();
 
-        if (isSelect)
+        if (isSelect && !cooldown)
         {
             FollowMouse();
             if (Input.GetMouseButtonUp(0)) DropObject();
         }
         if(quit && isMarked)
         {
-            Debug.LogWarning(gameObject.name);
             isMarked = false;
             cooldown = true;
             Invoke("Block", timeCollDown);
