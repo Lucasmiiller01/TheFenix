@@ -38,13 +38,13 @@ public class CarBehaviuor : MonoBehaviour {
                 if (transform.position.x > -6f)
                     rb.velocity = Vector2.left * 5;
                 else Destroy(this.gameObject);
-                this.GetComponent<SpriteRenderer>().sortingOrder = 3;
             }
             
             else if (transform.position.x < 6f)
             {
                rb.velocity = Vector2.right * 5;
                this.GetComponent<SpriteRenderer>().flipX = true;
+                this.GetComponent<SpriteRenderer>().sortingOrder = 3;
             }
             else Destroy(this.gameObject);
         }
