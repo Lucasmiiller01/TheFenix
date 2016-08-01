@@ -13,14 +13,17 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     private int[] poses;
     [SerializeField]
-    private GameObject ballon;
-    private Text textBox;
+    private GameObject[] ballons;
+    [SerializeField]
+    private Text[] textBox;
     private int actual;
+    private int actualText;
     // Use this for initialization
     void Start ()
     {
-        textBox = ballon.GetComponentInChildren<Text>();
         actual = 0;
+        actualText = 1;
+        ballons[2].SetActive(false);
         ActualizeTutorial();
 
     }
@@ -30,16 +33,29 @@ public class Tutorial : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if(actual < texts.Length - 1)
+            if (actual < 3)
+            {
                 actual++;
-            ActualizeTutorial();
-
+                ActualizeTutorial();
+            }
+            else
+            {
+                actual++;
+                if (actual.Equals(4))
+                {
+                    ballons[1].SetActive(false);
+                    ballons[2].SetActive(true);
+                    myImage.sprite = sprites[2];
+                    actualText = 2;
+                }
+                ActualizeTutorial();
+            }
         }
 
     }
     void ActualizeTutorial()
     {
-        textBox.text = texts[actual];
+        textBox[actualText].text = texts[actual];
         myImage.sprite = sprites[poses[actual]];
     }
 }
