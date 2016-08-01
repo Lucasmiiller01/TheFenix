@@ -120,7 +120,7 @@ public class Selector : MonoBehaviour {
             isMarked = false;
             cooldown = true;
             Invoke("Block", timeCollDown);
-            this.GetComponent<SpriteRenderer>().color = new Color(0.65f, 0.65f, 0.65f, 1);
+            this.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1);
         }
 
         if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
