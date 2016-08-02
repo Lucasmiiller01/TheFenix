@@ -12,6 +12,10 @@ public class GameController : MonoBehaviour
     public bool created;
     [SerializeField]
     private GameObject game;
+    [SerializeField]
+    private SpawnCarController spawnCarController_l;
+    [SerializeField]
+    private SpawnCarController spawnCarController_r;
     private GameObject instancePaper;
 
     [SerializeField]
@@ -25,15 +29,7 @@ public class GameController : MonoBehaviour
         props = new Vector3(Random.Range(5, 9), Random.Range(5, 9), Random.Range(5, 9));
     }
 
-    void FixedUpdate()
-    {
-
-        if (inGame)
-        {
-            Timer();
-        }
-    }
-	void Update ()
+    void Update ()
     {
         if (instancePaper != null && created.Equals(true))
         {
@@ -43,6 +39,21 @@ public class GameController : MonoBehaviour
             {
                 created = false;
             }
+        }
+        if (inGame)
+        {
+            Timer();
+        }
+        if (game.activeSelf.Equals(spawnCarController_l.enabled))
+        {
+            spawnCarController_l.enabled = !game.activeSelf;
+            if(spawnCarController_l.enabled) spawnCarController_l.StartCoroutine(spawnCarController_l.CarSpawn());
+            print("oi");
+        }
+        if (game.activeSelf.Equals(spawnCarController_r.enabled))
+        {
+            spawnCarController_r.enabled = !game.activeSelf;
+            if (spawnCarController_r.enabled) spawnCarController_r.StartCoroutine(spawnCarController_r.CarSpawn());
         }
     }
 

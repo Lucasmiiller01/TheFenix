@@ -45,7 +45,6 @@ public class Tutorial : MonoBehaviour
         if (!inTuto)
         {
             media = (gameController.props.x + gameController.props.y + gameController.props.z) / 3;
-            print(media);
             if (media >= 8 && myImage.sprite != sprites[2])
                 myImage.sprite = sprites[2];
             else if (myImage.sprite != sprites[2] && media <= 8 && media >= 6)
