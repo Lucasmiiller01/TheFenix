@@ -184,7 +184,10 @@ public class Selector : MonoBehaviour {
     private void PropsAffect()
     {
         gameController.props += auxProps;
+        if (!gameController.checkProps) gameController.checkProps = true;
+        gameController.UpFeedBack();
         auxProps = Vector3.zero;
+     
     }
 
     private void FollowMouse(Transform i)
