@@ -109,34 +109,37 @@ public class Selector : MonoBehaviour {
 
     void Update ()
     {
-        if(!cooldown)
-            RayCast();
+        if(!gameController.FinaleDay)
+        {
+             if (!cooldown)
+                RayCast();
 
-        if (isSelect && !cooldown)
-        {
-            FollowMouse();
-            if (Input.GetMouseButtonUp(0)) DropObject();
-        }
-        if(!isSelect)
-            this.transform.position = Vector2.Lerp(this.transform.position, inicialPos, 0.05f);
-        if (quit && isMarked)
-        {
-            isMarked = false;
-            cooldown = true;
-            Invoke("Block", timeCollDown * multCooldown);
-            this.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1);
-        }
+            if (isSelect && !cooldown)
+            {
+                FollowMouse();
+                if (Input.GetMouseButtonUp(0)) DropObject();
+            }
+            if(!isSelect)
+                this.transform.position = Vector2.Lerp(this.transform.position, inicialPos, 0.05f);
+            if (quit && isMarked)
+            {
+                isMarked = false;
+                cooldown = true;
+                Invoke("Block", timeCollDown * multCooldown);
+                this.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1);
+            }
 
-        if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
-            if(paper.transform.position.x < 14)
-                paper.transform.position = Vector2.Lerp(paper.transform.position, new Vector2(15, 1), 0.05f);
-        else if (myType.Equals("Stamp"))
-        {
-            Destroy(paper);
-            paper = null;
-            gameController.OnCreate();
-            quit = false;
-            multCooldown = 0;
+            if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
+                if(paper.transform.position.x < 14)
+                    paper.transform.position = Vector2.Lerp(paper.transform.position, new Vector2(15, 1), 0.05f);
+            else if (myType.Equals("Stamp"))
+            {
+                Destroy(paper);
+                paper = null;
+                gameController.OnCreate();
+                quit = false;
+                multCooldown = 0;
+            }
         }
     }
     #region RayCast

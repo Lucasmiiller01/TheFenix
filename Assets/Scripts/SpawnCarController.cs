@@ -18,48 +18,50 @@ public class SpawnCarController : MonoBehaviour {
  
     public IEnumerator CarSpawn()
     {
-
-        int random = Random.Range(0, 2);
-        yield return new WaitForSeconds(0.5f);
-        if (rigth)
+        if(!gameController.FinaleDay)
         {
-            if(gameController.props.x > minValueActived)
+            int random = Random.Range(0, 2);
+            yield return new WaitForSeconds(0.5f);
+            if (rigth)
             {
+                if(gameController.props.x > minValueActived)
+                {
+                    GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
+                    gameObject.transform.parent = this.transform;
+                    gameObject.GetComponent<CarBehaviuor>().direction = "Left";
+                    gameObject.GetComponent<CarBehaviuor>().type = "Cheers";
+                }
+            }
+
+            else
+            {
+                if (gameController.props.y > minValueActived)
+                {
+                    GameObject gameObject = (GameObject)Instantiate(car, this.transform.position, car.transform.rotation);
+                    gameObject.transform.parent = this.transform;
+                    gameObject.GetComponent<CarBehaviuor>().direction = "Rigth";
+                    gameObject.GetComponent<CarBehaviuor>().type = "Education";
+                }
+            }
+            yield return new WaitForSeconds(1f);
+            if(random.Equals(0) && rigth && gameController.props.z > minValueActived)
+            {
+            
                 GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
                 gameObject.transform.parent = this.transform;
                 gameObject.GetComponent<CarBehaviuor>().direction = "Left";
-                gameObject.GetComponent<CarBehaviuor>().type = "Cheers";
+                gameObject.GetComponent<CarBehaviuor>().type = "Safety";
+            
             }
-        }
-
-        else
-        {
-            if (gameController.props.y > minValueActived)
+            else if(!rigth && gameController.props.z > minValueActived)
             {
-                GameObject gameObject = (GameObject)Instantiate(car, this.transform.position, car.transform.rotation);
+                GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
                 gameObject.transform.parent = this.transform;
                 gameObject.GetComponent<CarBehaviuor>().direction = "Rigth";
-                gameObject.GetComponent<CarBehaviuor>().type = "Education";
+                gameObject.GetComponent<CarBehaviuor>().type = "Safety";
             }
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(CarSpawn());    
         }
-        yield return new WaitForSeconds(1f);
-        if(random.Equals(0) && rigth && gameController.props.z > minValueActived)
-        {
-            
-            GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
-            gameObject.transform.parent = this.transform;
-            gameObject.GetComponent<CarBehaviuor>().direction = "Left";
-            gameObject.GetComponent<CarBehaviuor>().type = "Safety";
-            
-        }
-        else if(!rigth && gameController.props.z > minValueActived)
-        {
-            GameObject gameObject = (GameObject) Instantiate(car, this.transform.position, car.transform.rotation);
-            gameObject.transform.parent = this.transform;
-            gameObject.GetComponent<CarBehaviuor>().direction = "Rigth";
-            gameObject.GetComponent<CarBehaviuor>().type = "Safety";
-        }
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(CarSpawn());    
     }
 }
