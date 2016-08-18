@@ -35,12 +35,12 @@ public class CarBehaviuor : MonoBehaviour {
         {
             if (direction.Equals("Left"))
             {
-                if (transform.position.x > -6f)
+                if (transform.position.x > -3f)
                     rb.velocity = Vector2.left * 5;
                 else Destroy(this.gameObject);
             }
             
-            else if (transform.position.x < 6f)
+            else if (transform.position.x < 5f)
             {
                rb.velocity = Vector2.right * 5;
                this.GetComponent<SpriteRenderer>().flipX = true;

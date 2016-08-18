@@ -33,15 +33,11 @@ public class GameController : MonoBehaviour
     private PropsController[] propsController;
     public Vector3 props;
     public bool checkProps;
-    private bool changeCanvas;
-    private bool city;
 
     void Start()
     {
         checkProps = true;
         inGame = true;
-        changeCanvas = false;
-        city = false;
         InvokeRepeating("DecreaseProps", 10f, 10f);
         InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
         props = new Vector3(Random.Range(50, 90), Random.Range(50, 90), Random.Range(50, 90));
@@ -74,7 +70,6 @@ public class GameController : MonoBehaviour
             if (spawnCarController_r.enabled) spawnCarController_r.StartCoroutine(spawnCarController_r.CarSpawn());
         }
         if (checkProps) UpdateText();
-        Change();
     }
 
     public void OnCreate()
@@ -183,34 +178,5 @@ public class GameController : MonoBehaviour
             if (stats[2] != null) stats[2].GetComponent<Text>().text = props.z + "%";
             checkProps = false;
         }
-    }
-    private void Change()
-    {
-        if (changeCanvas)
-        {
-            if (city)
-            {
-                iCamera.transform.position = Vector3.Lerp(iCamera.transform.position, new Vector3(iCamera.transform.position.x, -0.31f, iCamera.transform.position.z), 0.1f);
-                if((Mathf.Round(iCamera.transform.position.y * 100) / 100).Equals(-0.31f))
-                {
-                    city = false;
-                    changeCanvas = false;
-                }
-            }
-            else
-            {
-
-                iCamera.transform.position = Vector3.Lerp(iCamera.transform.position, new Vector3(iCamera.transform.position.x, 5.3f, iCamera.transform.position.z), 0.1f);
-                if ((Mathf.Round(iCamera.transform.position.y*10)/10).Equals(5.3f))
-                {
-                    city = true;
-                    changeCanvas = false;
-                }
-            }
-        }
-    }
-    public void ActiveChange()
-    {
-        changeCanvas = true;
     }
 }
