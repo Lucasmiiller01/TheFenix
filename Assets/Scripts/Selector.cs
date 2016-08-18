@@ -46,7 +46,7 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(2).transform.position = this.transform.position;
                         paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(Random.Range(1,3), auxProps.y, auxProps.z);
+                        auxProps = new Vector3(Random.Range(10,30), auxProps.y, auxProps.z);
                         isMarked = true;
                         multCooldown++;
                     }
@@ -56,7 +56,7 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(1).transform.position = this.transform.position;
                         paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(auxProps.x, Random.Range(1, 3), auxProps.z);
+                        auxProps = new Vector3(auxProps.x, Random.Range(10, 30), auxProps.z);
                         isMarked = true;
                         multCooldown++;
                     }
@@ -66,7 +66,7 @@ public class Selector : MonoBehaviour {
                     {
                         paper.transform.GetChild(0).transform.position = this.transform.position;
                         paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(auxProps.x, auxProps.y, Random.Range(1, 3));
+                        auxProps = new Vector3(auxProps.x, auxProps.y, Random.Range(10, 30));
                         isMarked = true;
                         multCooldown++;
                     }
