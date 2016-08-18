@@ -43,8 +43,8 @@ public class GameController : MonoBehaviour
 
         if (instancePaper != null && created.Equals(true))
         {
-            if(instancePaper.transform.position.x < 1f)
-                instancePaper.transform.position = Vector2.Lerp(instancePaper.transform.position, new Vector2(1, -1.5f), 0.1f);
+            if(instancePaper.transform.localPosition.x < paper.transform.position.x)
+                instancePaper.transform.localPosition = Vector2.Lerp(instancePaper.transform.localPosition, new Vector2(paper.transform.position.x, paper.transform.position.y), 0.1f);
             else
             {
                 created = false;
@@ -70,26 +70,39 @@ public class GameController : MonoBehaviour
 
     public void OnCreate()
     {
-       instancePaper = (GameObject) Instantiate(paper, new Vector3(-20, paper.transform.position.y, 0), paper.transform.rotation);
+       instancePaper = (GameObject) Instantiate(paper);
        instancePaper.transform.parent = game.transform;
-       created = true;
+       instancePaper.transform.localPosition = new Vector3(-20, paper.transform.position.y, 0);
+        created = true;
     }
     public void UpFeedBack()
     {
-        for (int i = 0; i < stats.Length; i++)
+        if(Selector.auxProps.x != 0)
         {
             GameObject instanceMessage;
-            instanceMessage = (GameObject)Instantiate(message, new Vector3(stats[i].transform.position.x, i * 20, stats[i].transform.position.z), stats[i].transform.rotation);
+            instanceMessage = (GameObject)Instantiate(message, stats[0].transform.position, stats[0].transform.rotation);
             instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            instanceMessage.transform.position = new Vector2(stats[0].transform.position.x +1, stats[0].transform.position.y);
             instanceMessage.GetComponent<Text>().color = Color.green;
-            if (i.Equals(0) && Selector.auxProps.x != 0) instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.x.ToString();
-            else if(i.Equals(0)) instanceMessage.GetComponent<Text>().text = "";
-            if (i.Equals(1) && Selector.auxProps.y != 0) instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.y.ToString();
-            else if(i.Equals(1)) instanceMessage.GetComponent<Text>().text = "";
-            if (i.Equals(2) && Selector.auxProps.z != 0) instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.z.ToString();
-            else if(i.Equals(2)) instanceMessage.GetComponent<Text>().text = "";
-            print(i);
-
+            instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.x * 10 + "%";
+        }
+        if (Selector.auxProps.y != 0)
+        {
+            GameObject instanceMessage;
+            instanceMessage = (GameObject)Instantiate(message, stats[1].transform.position, stats[1].transform.rotation);
+            instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            instanceMessage.transform.position = new Vector2(stats[1].transform.position.x +1, stats[1].transform.position.y);
+            instanceMessage.GetComponent<Text>().color = Color.green;
+            instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.y * 10 + "%";
+        }
+        if (Selector.auxProps.z != 0)
+        {
+            GameObject instanceMessage;
+            instanceMessage = (GameObject)Instantiate(message, stats[2].transform.position, stats[2].transform.rotation);
+            instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            instanceMessage.transform.position = new Vector2(stats[2].transform.position.x +1, stats[2].transform.position.y);
+            instanceMessage.GetComponent<Text>().color = Color.green;
+            instanceMessage.GetComponent<Text>().text = "+" + Selector.auxProps.z * 10 + "%";
         }
     }
     void DecreaseFeedBack()
@@ -97,8 +110,9 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < stats.Length; i++)
         {
             GameObject instanceMessage;
-            instanceMessage = (GameObject)Instantiate(message, new Vector3(stats[i].transform.position.x, i * 20, stats[i].transform.position.z), stats[i].transform.rotation);
+            instanceMessage = (GameObject)Instantiate(message, stats[i].transform.position, stats[i].transform.rotation);
             instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            instanceMessage.transform.position = new Vector2(stats[i].transform.position.x +1, stats[i].transform.position.y);
         }
     }
     public void DecreaseProps()
@@ -122,9 +136,9 @@ public class GameController : MonoBehaviour
     {
         if(checkProps)
         {
-            if (stats[0] != null) stats[0].GetComponent<Text>().text = "Policia:" + props.z.ToString() + "/10";
-            if (stats[1] != null) stats[1].GetComponent<Text>().text = "Hospital:" + props.x.ToString() + "/10";
-            if (stats[2] != null) stats[2].GetComponent<Text>().text = "Escola:" + props.y.ToString() + "/10";
+            if (stats[0] != null) stats[0].GetComponent<Text>().text = props.x * 10 + "%";
+            if (stats[1] != null) stats[1].GetComponent<Text>().text = props.y * 10 + "%";
+            if (stats[2] != null) stats[2].GetComponent<Text>().text = props.z * 10 + "%";
             checkProps = false;
         }
     }
