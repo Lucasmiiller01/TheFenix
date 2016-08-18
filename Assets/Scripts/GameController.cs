@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject game;
     [SerializeField]
+    private GameObject iCamera;
+    [SerializeField]
     private Transform canvas;
     [SerializeField]
     private GameObject message;
@@ -29,11 +31,15 @@ public class GameController : MonoBehaviour
     private GameObject[] stats = new GameObject[3];
     public Vector3 props;
     public bool checkProps;
+    private bool changeCanvas;
+    private bool city;
 
     void Start()
     {
         checkProps = true;
         inGame = true;
+        changeCanvas = false;
+        city = false;
         InvokeRepeating("DecreaseProps", 10f, 10f);
         props = new Vector3(Random.Range(5, 9), Random.Range(5, 9), Random.Range(5, 9));
     }
@@ -58,7 +64,6 @@ public class GameController : MonoBehaviour
         {
             spawnCarController_l.enabled = !game.activeSelf;
             if(spawnCarController_l.enabled) spawnCarController_l.StartCoroutine(spawnCarController_l.CarSpawn());
-            print("oi");
         }
         if (game.activeSelf.Equals(spawnCarController_r.enabled))
         {
@@ -66,6 +71,7 @@ public class GameController : MonoBehaviour
             if (spawnCarController_r.enabled) spawnCarController_r.StartCoroutine(spawnCarController_r.CarSpawn());
         }
         if (checkProps) UpdateText();
+        Change();
     }
 
     public void OnCreate()
@@ -141,5 +147,34 @@ public class GameController : MonoBehaviour
             if (stats[2] != null) stats[2].GetComponent<Text>().text = props.z * 10 + "%";
             checkProps = false;
         }
+    }
+    private void Change()
+    {
+        if (changeCanvas)
+        {
+            if (city)
+            {
+                iCamera.transform.position = Vector3.Lerp(iCamera.transform.position, new Vector3(iCamera.transform.position.x, -0.31f, iCamera.transform.position.z), 0.1f);
+                if((Mathf.Round(iCamera.transform.position.y * 100) / 100).Equals(-0.31f))
+                {
+                    city = false;
+                    changeCanvas = false;
+                }
+            }
+            else
+            {
+
+                iCamera.transform.position = Vector3.Lerp(iCamera.transform.position, new Vector3(iCamera.transform.position.x, 5.3f, iCamera.transform.position.z), 0.1f);
+                if ((Mathf.Round(iCamera.transform.position.y*10)/10).Equals(5.3f))
+                {
+                    city = true;
+                    changeCanvas = false;
+                }
+            }
+        }
+    }
+    public void ActiveChange()
+    {
+        changeCanvas = true;
     }
 }
