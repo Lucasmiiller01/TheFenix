@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     private GameObject paper;
     [SerializeField]
     private GameObject[] stats = new GameObject[3];
+    [SerializeField]
+    private PropsController[] propsController;
     public Vector3 props;
     public bool checkProps;
     private bool changeCanvas;
@@ -41,6 +43,7 @@ public class GameController : MonoBehaviour
         changeCanvas = false;
         city = false;
         InvokeRepeating("DecreaseProps", 10f, 10f);
+        InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
         props = new Vector3(Random.Range(5, 9), Random.Range(5, 9), Random.Range(5, 9));
     }
 
@@ -79,7 +82,7 @@ public class GameController : MonoBehaviour
        instancePaper = (GameObject) Instantiate(paper);
        instancePaper.transform.parent = game.transform;
        instancePaper.transform.localPosition = new Vector3(-20, paper.transform.position.y, 0);
-        created = true;
+       created = true;
     }
     public void UpFeedBack()
     {
@@ -120,6 +123,36 @@ public class GameController : MonoBehaviour
             instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
             instanceMessage.transform.position = new Vector2(stats[i].transform.position.x +1, stats[i].transform.position.y);
         }
+    }
+    void DecreasePropsFeedBack()
+    {
+        GameObject instanceMessage;
+        if (propsController[0] != null && propsController[0].decreaseValue != 0)
+        {
+            instanceMessage = (GameObject) Instantiate(message, new Vector3(230, 180, 0), message.transform.rotation);
+            props -= new Vector3(propsController[0].decreaseValue, 0, 0);
+            instanceMessage.GetComponent<Text>().text = "-" + (propsController[0].decreaseValue * 10).ToString()  + "%";
+            instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            checkProps = true;
+        }
+        if (propsController[1] != null && propsController[1].decreaseValue != 0)
+        {
+            instanceMessage = (GameObject) Instantiate(message, new Vector3(380, 180, 0), message.transform.rotation);
+            props -= new Vector3(0, propsController[1].decreaseValue, 0);
+            instanceMessage.GetComponent<Text>().text = "-" + (propsController[1].decreaseValue * 10).ToString() + "%";
+            instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            checkProps = true;
+        }
+        if (propsController[2] != null && propsController[2].decreaseValue != 0)
+        {
+            instanceMessage = (GameObject) Instantiate(message, new Vector3(80, 180, 0), message.transform.rotation);
+            props -= new Vector3(0, 0, propsController[2].decreaseValue);
+            instanceMessage.GetComponent<Text>().text = "-" + (propsController[2].decreaseValue * 10).ToString() + "%";
+            instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
+            checkProps = true;
+        }
+
+
     }
     public void DecreaseProps()
     {

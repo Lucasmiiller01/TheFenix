@@ -3,14 +3,41 @@ using System.Collections;
 
 public class PropsController : MonoBehaviour {
 
-    [SerializeField]
-    private string myType;
+    public string myType;
     [SerializeField]
     private GameController gameController;
     [SerializeField]
     private Sprite[] sprites;
+    [SerializeField]
+    private GameObject[] balloon;
+    [SerializeField]
+    public int nBallons;
+    public float decreaseValue;
+    void Start()
+    {
+        InvokeRepeating("OnActivedBallon", 2f, 5f);
+    }
+    public void OnActivedBallon()
+    {
+        int random = Random.Range(0, 4);
+        if (random.Equals(1))
+        {
+            int maxB = Random.Range(1, 3);
+            for (int i = 0; i < maxB + nBallons; i++)
+            {
+                if (balloon[i] != null && !balloon[i].activeSelf)
+                {
+                    balloon[i].SetActive(true);
+                }
+            }
+            decreaseValue = (nBallons + maxB) * 0.1f;
+            nBallons = maxB;
+        }
 
-	void Update ()
+    }
+ 
+
+    void Update ()
     {
         switch (myType)
         {
