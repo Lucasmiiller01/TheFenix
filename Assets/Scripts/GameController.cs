@@ -34,6 +34,14 @@ public class GameController : MonoBehaviour
     public Vector3 props;
     public bool checkProps;
     public bool FinaleDay;
+    public bool night;
+    [SerializeField]
+    private SpriteRenderer backGround;
+    [SerializeField]
+    private SpriteRenderer[] clouds;
+    public Color color;
+    public Color nColor;
+
 
     void Start()
     {
@@ -43,12 +51,36 @@ public class GameController : MonoBehaviour
         InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
         props = new Vector3(Random.Range(50, 90), Random.Range(50, 90), Random.Range(50, 90));
         FinaleDay = false;
+        night = false;
     }
 
     void Update ()
     {
         if(!FinaleDay)
         {
+            if (night)
+            {
+                if(backGround.color != color) backGround.color = color;
+                if(clouds[0].color != nColor)
+                {
+                    for (int i = 0; i < clouds.Length; i++)
+                    {
+                        clouds[i].color = nColor;
+                    }
+                }
+            }
+            else
+            {
+                if (backGround.color != Color.white) backGround.color = Color.white;
+                if (clouds[0].color != Color.white)
+                {
+                    for (int i = 0; i < clouds.Length; i++)
+                    {
+                        clouds[i].color = Color.white;
+                    }
+                }
+
+            }
             if (instancePaper != null && created.Equals(true))
             {
                 if(instancePaper.transform.localPosition.x < paper.transform.position.x)
@@ -58,10 +90,7 @@ public class GameController : MonoBehaviour
                     created = false;
                 }
             }
-            /*if (inGame)
-            {
-                Timer();
-            }*/
+         
             if (game.activeSelf.Equals(spawnCarController_l.enabled))
             {
                 spawnCarController_l.enabled = !game.activeSelf;
@@ -73,9 +102,14 @@ public class GameController : MonoBehaviour
                 if (spawnCarController_r.enabled) spawnCarController_r.StartCoroutine(spawnCarController_r.CarSpawn());
             }
             if (checkProps) UpdateText();
+
         }
     }
-
+    public void ToExchange(bool night)
+    {
+     
+       
+    }
     public void OnCreate()
     {
         if (!FinaleDay)

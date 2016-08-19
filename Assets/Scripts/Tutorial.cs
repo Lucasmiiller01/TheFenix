@@ -25,7 +25,9 @@ public class Tutorial : MonoBehaviour
     private int actual;
     private int actualText;
     private bool inTuto;
-    private byte[] quests; float media;
+    [SerializeField]
+    private byte[] quests;
+    float media;
     // Use this for initialization
     void Start ()
     {
@@ -104,6 +106,7 @@ public class Tutorial : MonoBehaviour
                 ballons[1].SetActive(true);
                 textBox[0].text = textsAux[0];
                 ActualizeTutorial();
+                print("opa");
             }
         }
 

@@ -9,6 +9,8 @@ public class PropsController : MonoBehaviour {
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
+    private Sprite[] spritesNight;
+    [SerializeField]
     private GameObject[] balloon;
     [SerializeField]
     public int nBallons;
@@ -46,39 +48,104 @@ public class PropsController : MonoBehaviour {
             switch (myType)
             {
                 case "Hospital":
-                    if (gameController.props.x >= 80 && this.GetComponent<SpriteRenderer>().sprite != sprites[0])
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[0] && gameController.props.x <= 80 && gameController.props.x >= 60)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[1] && gameController.props.x < 60 && gameController.props.x >= 30)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[1];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[2] && gameController.props.x < 30)
+                    if (gameController.props.x >= 80)
                     {
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[2];
+                        if(!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[1]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                    }
+                    else if  (gameController.props.x <= 80 && gameController.props.x >= 60)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[1]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                    }
+                    else if (gameController.props.x < 60 && gameController.props.x >= 30)
+                    {
+                        if (!gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[1];
+                            if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        }
+                        else if (gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[4];
+                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
+                        }
+                    }
+           
+                    else if (gameController.props.x < 30)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[8];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     break;
                 case "School":
-                    if (gameController.props.y >= 80 && this.GetComponent<SpriteRenderer>().sprite != sprites[3])
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[3] && gameController.props.y <= 80 && gameController.props.y >= 60)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[4] && gameController.props.y < 60 && gameController.props.y >= 30)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[4];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[5] && gameController.props.y < 30)
+                    if (gameController.props.y >= 80)
                     {
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[5];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
+                    else if (gameController.props.y <= 80 && gameController.props.y >= 60)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                        else if (gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+
+                    }
+                    else if (gameController.props.y < 60 && gameController.props.y >= 30)
+                    {
+                        if (!gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[4];
+                            if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        }
+                        else if (gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[3];
+                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
+                        }
+                    }
+                    else if (gameController.props.y < 30)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[6];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                    }
+                  
                     break;
                 case "Police":
-                    if (gameController.props.z >= 80 && this.GetComponent<SpriteRenderer>().sprite != sprites[6])
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[6] && gameController.props.z <= 80 && gameController.props.z >= 60)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[7] && gameController.props.z < 60 && gameController.props.z >= 30)
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[7];
-                    else if (this.GetComponent<SpriteRenderer>().sprite != sprites[8] && gameController.props.z < 30)
+                    if (gameController.props.z >= 80)
                     {
-                        this.GetComponent<SpriteRenderer>().sprite = sprites[8];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                    }
+                    else if (gameController.props.z <= 80 && gameController.props.z >= 60)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                        else if (gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                    }
+                    else if (gameController.props.z < 60 && gameController.props.z >= 30)
+                    {
+                        if (!gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[7];
+                            if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        }
+                        else if (gameController.night)
+                        {
+                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[5];
+                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
+                        }
+                    }
+                    else if (gameController.props.z < 30)
+                    {
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[7]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
+                        else if(gameController.night) this.GetComponent<SpriteRenderer>().sprite = spritesNight[7];
+                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     break;
             }
