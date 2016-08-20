@@ -60,14 +60,14 @@ public class PropsController : MonoBehaviour {
                 case "Hospital":
                     if (gameController.props.x >= 80)
                     {
-                        if(!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[1]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
-                    else if  (gameController.props.x <= 80 && gameController.props.x >= 60)
+                    else if (gameController.props.x <= 80 && gameController.props.x >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[1]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     else if (gameController.props.x < 60 && gameController.props.x >= 30)
@@ -82,26 +82,28 @@ public class PropsController : MonoBehaviour {
                             this.GetComponent<SpriteRenderer>().sprite = spritesNight[4];
                             if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
                         }
+                        print("3");
                     }
-           
+
                     else if (gameController.props.x < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[8];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
+                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[8];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        print("4");
                     }
                     break;
                 case "School":
                     if (gameController.props.y >= 80)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     else if (gameController.props.y <= 80 && gameController.props.y >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                        else if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
 
                     }
@@ -120,8 +122,8 @@ public class PropsController : MonoBehaviour {
                     }
                     else if (gameController.props.y < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[6];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[5]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
+                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[6];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                   
@@ -129,14 +131,14 @@ public class PropsController : MonoBehaviour {
                 case "Police":
                     if (gameController.props.z >= 80)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     else if (gameController.props.z <= 80 && gameController.props.z >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                        else if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
                     }
                     else if (gameController.props.z < 60 && gameController.props.z >= 30)
                     {
@@ -153,8 +155,8 @@ public class PropsController : MonoBehaviour {
                     }
                     else if (gameController.props.z < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite == spritesNight[7]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
-                        else if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[7];
+                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
+                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[7];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                     }
                     break;
