@@ -12,14 +12,14 @@ public class SpawnCarController : MonoBehaviour {
     void Start ()
     {
         StartCoroutine(CarSpawn());
-        if (minValueActived.Equals(0)) minValueActived = 4;
+        if (minValueActived.Equals(0)) minValueActived = 50;
     }
 	
  
     public IEnumerator CarSpawn()
     {
-        if(!gameController.FinaleDay)
-        {
+      
+           
             int random = Random.Range(0, 2);
             yield return new WaitForSeconds(0.5f);
             if (rigth)
@@ -63,5 +63,5 @@ public class SpawnCarController : MonoBehaviour {
             yield return new WaitForSeconds(2f);
             StartCoroutine(CarSpawn());    
         }
-    }
+    
 }

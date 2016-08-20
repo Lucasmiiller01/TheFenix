@@ -18,11 +18,6 @@ public class GameController : MonoBehaviour
     private Transform canvas;
     [SerializeField]
     private GameObject message;
-
-    [SerializeField]
-    private SpawnCarController spawnCarController_l;
-    [SerializeField]
-    private SpawnCarController spawnCarController_r;
     private GameObject instancePaper;
 
     [SerializeField]
@@ -41,10 +36,13 @@ public class GameController : MonoBehaviour
     private SpriteRenderer[] clouds;
     public Color color;
     public Color nColor;
-
+    public bool fade;
+    [SerializeField]
+    private FadeManager fadeManager;
 
     void Start()
     {
+        fade = false;
         checkProps = true;
         inGame = true;
         InvokeRepeating("DecreaseProps", 10f, 10f);
@@ -56,31 +54,32 @@ public class GameController : MonoBehaviour
 
     void Update ()
     {
-        if(!FinaleDay)
+        if (night && !FinaleDay && fadeManager.actived)
         {
-            if (night)
+            if (backGround.color != color) backGround.color = color;
+            if (clouds[0].color != nColor)
             {
-                if(backGround.color != color) backGround.color = color;
-                if(clouds[0].color != nColor)
+                for (int i = 0; i < clouds.Length; i++)
                 {
-                    for (int i = 0; i < clouds.Length; i++)
-                    {
-                        clouds[i].color = nColor;
-                    }
+                    clouds[i].color = nColor;
                 }
             }
-            else
+        }
+        else
+        {
+            if (backGround.color != Color.white) backGround.color = Color.white;
+            if (clouds[0].color != Color.white)
             {
-                if (backGround.color != Color.white) backGround.color = Color.white;
-                if (clouds[0].color != Color.white)
+                for (int i = 0; i < clouds.Length; i++)
                 {
-                    for (int i = 0; i < clouds.Length; i++)
-                    {
-                        clouds[i].color = Color.white;
-                    }
+                    clouds[i].color = Color.white;
                 }
+            }
 
-            }
+        }
+        if (!FinaleDay && !fade)
+        {
+           
             if (instancePaper != null && created.Equals(true))
             {
                 if(instancePaper.transform.localPosition.x < paper.transform.position.x)
@@ -90,29 +89,13 @@ public class GameController : MonoBehaviour
                     created = false;
                 }
             }
-         
-            if (game.activeSelf.Equals(spawnCarController_l.enabled))
-            {
-                spawnCarController_l.enabled = !game.activeSelf;
-                if(spawnCarController_l.enabled) spawnCarController_l.StartCoroutine(spawnCarController_l.CarSpawn());
-            }
-            if (game.activeSelf.Equals(spawnCarController_r.enabled))
-            {
-                spawnCarController_r.enabled = !game.activeSelf;
-                if (spawnCarController_r.enabled) spawnCarController_r.StartCoroutine(spawnCarController_r.CarSpawn());
-            }
             if (checkProps) UpdateText();
-
         }
     }
-    public void ToExchange(bool night)
-    {
-     
-       
-    }
+  
     public void OnCreate()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
            instancePaper = (GameObject) Instantiate(paper);
            instancePaper.transform.parent = game.transform;
@@ -122,7 +105,7 @@ public class GameController : MonoBehaviour
     }
     public void UpFeedBack()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
             if (Selector.auxProps.x != 0)
             {
@@ -155,7 +138,7 @@ public class GameController : MonoBehaviour
     }
     void DecreaseFeedBack()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
              for (int i = 0; i < stats.Length; i++)
             {
@@ -168,12 +151,12 @@ public class GameController : MonoBehaviour
     }
     void DecreasePropsFeedBack()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
             GameObject instanceMessage;
             if (propsController[0] != null && propsController[0].decreaseValue != 0)
             {
-                instanceMessage = (GameObject) Instantiate(message, new Vector3(230, 180, 0), message.transform.rotation);
+                instanceMessage = (GameObject) Instantiate(message, new Vector3(350, 500, 0), message.transform.rotation);
                 props -= new Vector3(propsController[0].decreaseValue, 0, 0);
                 instanceMessage.GetComponent<Text>().text = "-" + (propsController[0].decreaseValue).ToString()  + "%";
                 instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
@@ -181,7 +164,7 @@ public class GameController : MonoBehaviour
             }
             if (propsController[1] != null && propsController[1].decreaseValue != 0)
             {
-                instanceMessage = (GameObject) Instantiate(message, new Vector3(380, 180, 0), message.transform.rotation);
+                instanceMessage = (GameObject) Instantiate(message, new Vector3(570, 500, 0), message.transform.rotation);
                 props -= new Vector3(0, propsController[1].decreaseValue, 0);
                 instanceMessage.GetComponent<Text>().text = "-" + (propsController[1].decreaseValue).ToString() + "%";
                 instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
@@ -189,7 +172,7 @@ public class GameController : MonoBehaviour
             }
             if (propsController[2] != null && propsController[2].decreaseValue != 0)
             {
-                instanceMessage = (GameObject) Instantiate(message, new Vector3(80, 180, 0), message.transform.rotation);
+                instanceMessage = (GameObject) Instantiate(message, new Vector3(120, 500, 0), message.transform.rotation);
                 props -= new Vector3(0, 0, propsController[2].decreaseValue);
                 instanceMessage.GetComponent<Text>().text = "-" + (propsController[2].decreaseValue).ToString() + "%";
                 instanceMessage.GetComponent<RectTransform>().SetParent(canvas.GetComponent<RectTransform>(), false);
@@ -200,7 +183,7 @@ public class GameController : MonoBehaviour
     }
     public void DecreaseProps()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
             props -= new Vector3(10, 10, 10);
             DecreaseFeedBack();
@@ -217,7 +200,7 @@ public class GameController : MonoBehaviour
     }
     private void UpdateText()
     {
-        if (!FinaleDay)
+        if (!FinaleDay && !fade)
         {
             if (props.x > 100) props.x = 100;
             else if (props.x < 0) props.x = 0;

@@ -109,7 +109,7 @@ public class Selector : MonoBehaviour {
 
     void Update ()
     {
-        if(!gameController.FinaleDay)
+        if(!gameController.FinaleDay && !gameController.fade)
         {
              if (!cooldown)
                 RayCast();
