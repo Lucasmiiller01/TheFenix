@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour
     public Vector3 props;
     public bool checkProps;
     public bool FinaleDay;
-    public bool night;
     [SerializeField]
     private SpriteRenderer backGround;
     [SerializeField]
@@ -37,8 +36,7 @@ public class GameController : MonoBehaviour
     public Color color;
     public Color nColor;
     public bool fade;
-    [SerializeField]
-    private FadeManager fadeManager;
+  
 
     void Start()
     {
@@ -49,12 +47,12 @@ public class GameController : MonoBehaviour
         InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
         props = new Vector3(Random.Range(50, 90), Random.Range(50, 90), Random.Range(50, 90));
         FinaleDay = false;
-        night = false;
+   
     }
 
     void Update ()
     {
-        if (night && !FinaleDay && fadeManager.actived)
+        /*if (night && !FinaleDay && fadeManager.actived)
         {
             if (backGround.color != color) backGround.color = color;
             if (clouds[0].color != nColor)
@@ -76,7 +74,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-        }
+        }*/
         if (!FinaleDay && !fade)
         {
            

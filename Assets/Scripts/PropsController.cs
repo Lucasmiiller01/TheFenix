@@ -18,6 +18,8 @@ public class PropsController : MonoBehaviour {
     private bool actived;
     [SerializeField]
     private FadeManager fadeManager;
+    [SerializeField]
+    private GameObject protest;
     void Start()
     {
         actived = false;
@@ -45,124 +47,112 @@ public class PropsController : MonoBehaviour {
     }
  
 
-    void Update ()
+    public void ChangeSprite ()
     {
-        if (!gameController.FinaleDay)
+        /*if (!gameController.FinaleDay)
         {
             if(gameController.night && !actived)
             {
                 InvokeRepeating("OnActivedBallon", 4f, 8f);
                 actived = true;
-            }
+            }*/
            
             switch (myType)
             {
                 case "Hospital":
                     if (gameController.props.x >= 80)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (protest.activeSelf) protest.SetActive(false);
                     }
                     else if (gameController.props.x <= 80 && gameController.props.x >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
-                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[1];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                  
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (protest.activeSelf) protest.SetActive(false);
                     }
                     else if (gameController.props.x < 60 && gameController.props.x >= 30)
                     {
-                        if (!gameController.night)
-                        {
+                       
                             this.GetComponent<SpriteRenderer>().sprite = sprites[1];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        }
-                        else if (gameController.night && fadeManager.actived)
-                        {
-                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[4];
-                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
-                        }
-                        print("3");
+                       
+                            if (!protest.activeSelf) protest.SetActive(true);
+  
                     }
 
                     else if (gameController.props.x < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
-                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[8];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
+                
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        print("4");
+                        if (!protest.activeSelf) protest.SetActive(true);
                     }
                     break;
                 case "School":
                     if (gameController.props.y >= 80)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (protest.activeSelf) protest.SetActive(false);
                     }
                     else if (gameController.props.y <= 80 && gameController.props.y >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
-                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[0];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                      
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (protest.activeSelf) protest.SetActive(false);
 
                     }
                     else if (gameController.props.y < 60 && gameController.props.y >= 30)
                     {
-                        if (!gameController.night)
-                        {
+                        
                             this.GetComponent<SpriteRenderer>().sprite = sprites[4];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        }
-                        else if (gameController.night && fadeManager.actived)
-                        {
-                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[3];
-                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
-                        }
+                            if (!protest.activeSelf) protest.SetActive(true);
+
+
                     }
                     else if (gameController.props.y < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[5]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
-                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[6];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[5]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
+            
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (!protest.activeSelf) protest.SetActive(true);
                     }
                   
                     break;
                 case "Police":
                     if (gameController.props.z >= 80)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                      
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (protest.activeSelf) protest.SetActive(false);
                     }
                     else if (gameController.props.z <= 80 && gameController.props.z >= 60)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
-                        if (gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[2];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                      
+                        if (protest.activeSelf) protest.SetActive(false);
                     }
                     else if (gameController.props.z < 60 && gameController.props.z >= 30)
                     {
-                        if (!gameController.night)
-                        {
                             this.GetComponent<SpriteRenderer>().sprite = sprites[7];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        }
-                        else if (gameController.night && fadeManager.actived)
-                        {
-                            this.GetComponent<SpriteRenderer>().sprite = spritesNight[5];
-                            if (!this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = true;
-                        }
+                            if (!protest.activeSelf) protest.SetActive(true);
+
                     }
                     else if (gameController.props.z < 30)
                     {
-                        if (!gameController.night && this.GetComponent<SpriteRenderer>().sprite != sprites[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
-                        if(gameController.night && fadeManager.actived) this.GetComponent<SpriteRenderer>().sprite = spritesNight[7];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
+                       
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
+                        if (!protest.activeSelf) protest.SetActive(true);
                     }
                     break;
             }
-
-        }
-
     }
 }

@@ -22,7 +22,7 @@ public class FadeManager : MonoBehaviour {
 	
 	void Update ()
     {
-	    if(gameController.night)
+	   /* if(gameController.night)
         {
             text.text = "Etapa 2";
             if (image.color.a >= 0.95f)
@@ -32,7 +32,7 @@ public class FadeManager : MonoBehaviour {
             if(actived)
                 FadeToClear();
             else FadeToBlack();
-        }
+        }*/
     }
   
     void FadeToClear()

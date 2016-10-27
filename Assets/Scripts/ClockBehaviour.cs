@@ -26,7 +26,7 @@ public class ClockBehaviour : MonoBehaviour {
 
         if (transform.rotation.eulerAngles.z >= 241 && transform.rotation.eulerAngles.z < 245)
         {
-            gameController.night = true;
+            //gameController.night = true;
             gameController.fade = true;
         }
     }
