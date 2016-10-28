@@ -13,6 +13,8 @@ public class BoxScript : MonoBehaviour {
     private TutorialFirst tutorial;
     [SerializeField]
     private string myType;
+    [SerializeField]
+    private GameObject ballon;
 
     private int myMoney;
     public static int totalMoney;
@@ -81,7 +83,15 @@ public class BoxScript : MonoBehaviour {
         }
 
         if (totalMoney <= 0 || gameController.props.z > 7 && gameController.props.x > 7 && gameController.props.y > 7)
+        {
             Camera.main.GetComponent<Animator>().enabled = true;
+            Invoke("Ballon", 1f);
+        }
+    }
+    void Ballon()
+    {
+        ballon.SetActive(true);
+        tutorial.ChangeFinal(gameController.props);
     }
 
 }
