@@ -23,6 +23,8 @@ public class Selector : MonoBehaviour {
 
     [SerializeField]
     private GameController gameController;
+    [SerializeField]
+    private GameObject feedback;
     public static Vector3 auxProps;
     public static float multCooldown;
 
@@ -142,8 +144,15 @@ public class Selector : MonoBehaviour {
         if (paper != null) quit = true;
     }
 
+    void DesactivedFeedback()
+    {
+        feedback.SetActive(false);
+    }
+
     private void PropsAffect()
     {
+        feedback.SetActive(true);
+        Invoke("DesactivedFeedback", 0.3f);
         if (this.aprove)
         {
             gameController.props += paper.GetComponent<PaperController>().GetEffectsProps();

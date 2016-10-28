@@ -38,14 +38,30 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (gameController.GetEtapa().Equals(1))
             {
                 if (next)
-                {
+                {   
                     Camera.main.GetComponent<Animator>().SetBool("back", true);
-                    gameController.SetEtapa(1);
-                    myParent.SetActive(false);
-                    Etapa1.SetActive(false);
-                    Etapa2.SetActive(true);
-                    gameController.NewProps();
-                    gameController.OnCreate();
+                    if(Tutorial.inTuto2)
+                    {
+                        gameController.SetEtapa(1);
+                        myParent.SetActive(false);
+                        go[0].SetActive(true);
+                        go[1].SetActive(false);
+                        Etapa1.SetActive(false);
+                        Etapa2.SetActive(true);
+                        gameController.NewProps();
+                        gameController.OnCreate();
+                        go[2].GetComponent<Tutorial>().Continue();                        
+
+                    }
+                    else
+                    {
+                        gameController.SetEtapa(1);
+                        myParent.SetActive(false);
+                        Etapa1.SetActive(false);
+                        Etapa2.SetActive(true);
+                        gameController.NewProps();
+                        gameController.OnCreate();
+                    }
                 }
                 else
                 {
@@ -60,7 +76,15 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else
                 {
-                    Application.LoadLevel(Application.loadedLevel);
+                    print("oi");
+                    myParent.SetActive(false);
+                    gameController.updateProps = false;
+                    Etapa1.SetActive(false);
+                    Etapa2.SetActive(true);
+                    gameController.NewProps();
+                    gameController.OnCreate();
+
+                    Camera.main.GetComponent<Animator>().SetBool("back", true);
                 }
             }
         }

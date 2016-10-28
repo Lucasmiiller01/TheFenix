@@ -23,40 +23,12 @@ public class PropsController : MonoBehaviour {
     void Start()
     {
         actived = false;
-        //Turorial
-    }
-    public void OnActivedBallon()
-    {
-        if(!gameController.FinaleDay)
-        {
-            int random = Random.Range(0, 4);
-            if (random.Equals(0))
-            {
-                int maxB = Random.Range(1, 3);
-                for (int i = 0; i < maxB + nBallons; i++)
-                {
-                    if (balloon[i] != null && !balloon[i].activeSelf)
-                    {
-                        balloon[i].SetActive(true);
-                    }
-                }
-                decreaseValue = (nBallons + maxB);
-                nBallons = maxB;
-            }
-        }
     }
  
 
     public void ChangeSprite ()
     {
-        /*if (!gameController.FinaleDay)
-        {
-            if(gameController.night && !actived)
-            {
-                InvokeRepeating("OnActivedBallon", 4f, 8f);
-                actived = true;
-            }*/
-           
+     
             switch (myType)
             {
                 case "Hospital":

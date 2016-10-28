@@ -25,6 +25,7 @@ public class Tutorial : MonoBehaviour
     private int actual;
     private int actualText;
     public static bool inTuto = true;
+    public static bool inTuto2 = true;
     [SerializeField]
     private byte[] quests;
     float media;
@@ -43,52 +44,47 @@ public class Tutorial : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!inTuto)
+        if (Input.GetMouseButtonUp(0))
         {
-            media = (gameController.props.x + gameController.props.y + gameController.props.z) / 3;
-            if (media >= 8 && myImage.sprite != sprites[2])
-                myImage.sprite = sprites[2];
-            else if (myImage.sprite != sprites[2] && media <= 8 && media >= 6)
-                myImage.sprite = sprites[2];
-            else if (myImage.sprite != sprites[0] && media < 6 && media >= 3)
-                myImage.sprite = sprites[0];
-            else if (myImage.sprite != sprites[1] && media < 3)
-                myImage.sprite = sprites[1];
-        }
-        else
-        {
-            if (Input.GetMouseButtonUp(0))
+            if (actual.Equals(5))
             {
-                if (actual.Equals(6))
-                {
-                    ballons[4].SetActive(true);
-                    ballons[3].SetActive(false);
-                    actualText = 4;
-                    ActualizeTutorial();
-                    actual++;
-                }
-                if (actual < 3)
-                {
-                    actual++;
-                    if (actual.Equals(3))
-                    {
-                        ballons[0].SetActive(false);
-                        ballons[2].SetActive(true);
-                        myImage.sprite = sprites[2];
-                    }
-                    ActualizeTutorial();
-                }
-                else if(actual > 3 && actual < 6)
-                {
-                    ActualizeTutorial();
-                    actual++;
-                }
-                if(actual.Equals(7))
-                {
-                    Camera.main.GetComponent<Animator>().SetBool("back", false);
-                }
-
+                ballons[3].SetActive(false);
+                actualText = 4;
+                Camera.main.GetComponent<Animator>().SetBool("back", false);
+                actual++;
+                Invoke("ActualizeTutorial", 1f);
             }
+            if (actual < 3 || actual > 6)
+            {
+                actual++;
+                if (actual.Equals(3))
+                {
+                    ballons[0].SetActive(false);
+                    ballons[2].SetActive(true);
+                    myImage.sprite = sprites[2];
+                }
+                if (actual.Equals(11))
+                {
+                    ballons[0].SetActive(false);
+                    ballons[2].SetActive(true);
+                    ballons[5].SetActive(true);
+                    actualText = 2;
+                    myImage.sprite = sprites[2];
+                }
+                if (actual>11)
+                {
+                    ballons[6].SetActive(true);
+                    ballons[7].SetActive(false);
+                    return;
+                }
+                ActualizeTutorial();
+            }
+            else if (actual > 3 && actual < 6)
+            {
+                ActualizeTutorial();
+                actual++;
+            }
+
         }
 
     }
@@ -104,6 +100,16 @@ public class Tutorial : MonoBehaviour
     {
         textBox[actualText].text = texts[actual];
         myImage.sprite = sprites[poses[actual]];
+        if(actual.Equals(6))
+            ballons[4].SetActive(true);
+    }
+    public void Continue()
+    {
+        ballons[4].SetActive(false);
+        ballons[0].SetActive(true);
+        actualText = 0;
+        actual++;
+        ActualizeTutorial();
     }
     public void ChangeScene(string name)
     {

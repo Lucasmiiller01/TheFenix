@@ -91,7 +91,8 @@ public class BoxScript : MonoBehaviour {
         {
             if (gameController.GetEtapa().Equals(0))
             {
-                tutorial_.CompleteBag();
+                Invoke("ExtraKill", 1f);
+
             }
             else
             {
@@ -99,6 +100,10 @@ public class BoxScript : MonoBehaviour {
                 Invoke("Ballon", 1f);
             }
         }
+    }
+    void ExtraKill()
+    {
+        tutorial_.CompleteBag();
     }
     void Ballon()
     {

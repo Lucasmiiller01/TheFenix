@@ -9,7 +9,8 @@ public class MoneyManager : MonoBehaviour {
     private GameObject box;
     private Vector3 mousePos;
     private Vector3 inicialPos;
-
+    [SerializeField]
+    private GameObject feedback;
     [SerializeField]
     private GameController gameController;
     public static Vector3 auxProps;
@@ -29,9 +30,19 @@ public class MoneyManager : MonoBehaviour {
         {
             box.GetComponent<BoxScript>().SumMoney();
             this.gameObject.SetActive(false);
+            if(!box.GetComponent<Animator>().GetBool("balance")) box.GetComponent<Animator>().SetBool("balance", true);
+            feedback.SetActive(true);
+            Invoke("DesactivedBalance", 0.4f);
         }
 
     }
+
+    void DesactivedBalance()
+    {
+        box.GetComponent<Animator>().SetBool("balance", false);
+        feedback.SetActive(false);
+    }
+
     #endregion
 
     #region OnTriggerEnterAndExit
