@@ -49,7 +49,7 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                         Etapa1.SetActive(false);
                         Etapa2.SetActive(true);
                         gameController.NewProps();
-                        gameController.OnCreate();
+                        gameController.OnCreate();                        
                         go[2].GetComponent<Tutorial>().Continue();                        
 
                     }
@@ -76,7 +76,6 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
                 else
                 {
-                    print("oi");
                     myParent.SetActive(false);
                     gameController.updateProps = false;
                     Etapa1.SetActive(false);

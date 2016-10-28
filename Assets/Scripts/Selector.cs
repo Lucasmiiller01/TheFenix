@@ -153,6 +153,7 @@ public class Selector : MonoBehaviour {
     {
         feedback.SetActive(true);
         Invoke("DesactivedFeedback", 0.3f);
+        
         if (this.aprove)
         {
             gameController.props += paper.GetComponent<PaperController>().GetEffectsProps();

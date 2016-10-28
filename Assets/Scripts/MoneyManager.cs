@@ -12,6 +12,8 @@ public class MoneyManager : MonoBehaviour {
     [SerializeField]
     private GameObject feedback;
     [SerializeField]
+    private ChannelController channel;
+    [SerializeField]
     private GameController gameController;
     public static Vector3 auxProps;
     public static float multCooldown;
@@ -41,6 +43,8 @@ public class MoneyManager : MonoBehaviour {
     {
         box.GetComponent<Animator>().SetBool("balance", false);
         feedback.SetActive(false);
+        if (Tutorial.inTuto)
+            channel.ChannelStatic();
     }
 
     #endregion

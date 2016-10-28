@@ -57,10 +57,12 @@ public class Tutorial : MonoBehaviour
             if (actual < 3 || actual > 6)
             {
                 actual++;
+
                 if (actual.Equals(3))
                 {
                     ballons[0].SetActive(false);
                     ballons[2].SetActive(true);
+                    ballons[8].SetActive(true);
                     myImage.sprite = sprites[2];
                 }
                 if (actual.Equals(11))
@@ -75,6 +77,8 @@ public class Tutorial : MonoBehaviour
                 {
                     ballons[6].SetActive(true);
                     ballons[7].SetActive(false);
+                    ballons[5].SetActive(false);
+                    inTuto2 = false;
                     return;
                 }
                 ActualizeTutorial();
@@ -92,6 +96,7 @@ public class Tutorial : MonoBehaviour
     {
         ballons[3].SetActive(true);
         ballons[2].SetActive(false);
+        ballons[8].SetActive(false);
         actualText = 3;
         ActualizeTutorial();
         actual = 4;

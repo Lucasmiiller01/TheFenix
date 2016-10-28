@@ -13,7 +13,7 @@ public class ChannelController : MonoBehaviour {
         Invoke("NewChannel", 0.2f);
     }
 
-    void ChannelStatic()
+    public void ChannelStatic()
     {
         channels[0].SetActive(true);
         channels[actualChannel].SetActive(false);
@@ -27,6 +27,7 @@ public class ChannelController : MonoBehaviour {
         channels[actualChannel].SetActive(true);
         channels[actualChannel].GetComponent<PropsController>().ChangeSprite();
         channels[0].SetActive(false);
-        Invoke("ChannelStatic", 2f);
+        if(channels.Length > 2)
+            Invoke("ChannelStatic", 2f);
     }
 }
