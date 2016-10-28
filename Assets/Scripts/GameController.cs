@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     private Transform canvas;
     [SerializeField]
     private GameObject message;
+    [SerializeField]
+    private GameObject[] go;
     private GameObject instancePaper;
 
     [SerializeField]
@@ -44,6 +46,7 @@ public class GameController : MonoBehaviour
     public Color nColor;
     public bool fade;
     private int Etapa;
+    public bool updateProps;
 
 
     void Start()
@@ -60,10 +63,24 @@ public class GameController : MonoBehaviour
         inGame = true;
         //InvokeRepeating("DecreaseProps", 10f, 10f);
         //InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
-        props = preValues[Random.Range(0,3)];
+        
         FinaleDay = false;
-        Etapa = 1;
-   
+        if (Tutorial.inTuto) Etapa = 0;
+        else
+        {
+            Etapa = 1;
+            go[3].SetActive(true);
+            go[2].SetActive(true);
+            go[1].SetActive(false);
+            go[0].SetActive(false);
+        }
+        updateProps = false;
+
+    }
+    public void NewProps()
+    {
+        props = preValues[Random.Range(0, 3)];
+
     }
     public int GetEtapa() {
         return Etapa;
@@ -72,11 +89,20 @@ public class GameController : MonoBehaviour
     public int SetEtapa(int value)
     {
         return Etapa += value;
-
     }
 
     void Update ()
     {
+        if (Etapa > 0 && !updateProps)
+        {
+            NewProps();
+            updateProps = true;
+        }
+        else if(!updateProps)
+        {
+            props = preValues[3];
+            updateProps = true;
+        }
         if (!FinaleDay && !fade)
         {
            
@@ -107,6 +133,7 @@ public class GameController : MonoBehaviour
         else
         {
             ballon.SetActive(true);
+            Camera.main.GetComponent<Animator>().SetBool("back", false);
         }
     }
    /* public void UpFeedBack()

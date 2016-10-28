@@ -24,7 +24,7 @@ public class Tutorial : MonoBehaviour
     private GameController gameController;
     private int actual;
     private int actualText;
-    private bool inTuto;
+    public static bool inTuto = true;
     [SerializeField]
     private byte[] quests;
     float media;
@@ -32,11 +32,10 @@ public class Tutorial : MonoBehaviour
     void Start ()
     {
         actual = 0;
-        inTuto = true;
-        actualText = 1;
+        actualText = 0;
         quests = new byte[2];
-        ballons[2].SetActive(false);
-        textBox[0].text = textsAux[0];
+        ballons[0].SetActive(true);
+        textBox[0].text = texts[0];
         ActualizeTutorial();
 
     }
@@ -60,56 +59,46 @@ public class Tutorial : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (actual != 8 && quests[0] != 1)
+                if (actual.Equals(6))
+                {
+                    ballons[4].SetActive(true);
+                    ballons[3].SetActive(false);
+                    actualText = 4;
+                    ActualizeTutorial();
+                    actual++;
+                }
+                if (actual < 3)
                 {
                     actual++;
-                    if (actual.Equals(4))
-                    {
-                        ballons[1].SetActive(false);
-                        ballons[2].SetActive(true);
-                        myImage.sprite = sprites[2];
-                        actualText = 2;
-                    }
-                    else if (actual.Equals(8))
-                    {
-                        textBox[0].text = textsAux[1];
-
-                    }
-                    else if (actual.Equals(10) && quests[1] != 2)
-                    {
-                        ballons[1].SetActive(false);
-                        ballons[2].SetActive(false);
-                        actual--;
-                        textBox[0].text = textsAux[2];
-                        quests[1] = 1;
-
-                    }
-                    else if (actual.Equals(13))
+                    if (actual.Equals(3))
                     {
                         ballons[0].SetActive(false);
-                        ballons[1].SetActive(false);
-                        ballons[2].SetActive(false);
-                        myImage.sprite = sprites[0];
-                        actual--; inTuto = false;
-
+                        ballons[2].SetActive(true);
+                        myImage.sprite = sprites[2];
                     }
                     ActualizeTutorial();
                 }
+                else if(actual > 3 && actual < 6)
+                {
+                    ActualizeTutorial();
+                    actual++;
+                }
+                if(actual.Equals(7))
+                {
+                    Camera.main.GetComponent<Animator>().SetBool("back", false);
+                }
 
-            }
-            if (quests[0].Equals(1))
-                quests[0] = 2;
-            else if (quests[1].Equals(1) && Selector.quit)
-            {
-                quests[1] = 2;
-                actual++;
-                ballons[1].SetActive(true);
-                textBox[0].text = textsAux[0];
-                ActualizeTutorial();
-                print("opa");
             }
         }
 
+    }
+    public void CompleteBag()
+    {
+        ballons[3].SetActive(true);
+        ballons[2].SetActive(false);
+        actualText = 3;
+        ActualizeTutorial();
+        actual = 4;
     }
     void ActualizeTutorial()
     {

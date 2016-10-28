@@ -15,22 +15,56 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private GameObject Etapa1;
     [SerializeField]
     private GameObject Etapa2;
+    [SerializeField]
+    private GameObject[] go;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(next)
+      
+        if (gameController.GetEtapa().Equals(0))
         {
+            go[3].SetActive(true);
+            go[2].SetActive(true);
+            go[1].SetActive(false);
+            go[0].SetActive(false);
+            gameController.updateProps = false;
             Camera.main.GetComponent<Animator>().SetBool("back", true);
             gameController.SetEtapa(1);
-            myParent.SetActive(false);
-            Etapa1.SetActive(false);
-            Etapa2.SetActive(true);
+            Tutorial.inTuto = false; 
 
         }
         else
         {
-            Application.LoadLevel(Application.loadedLevel);
+            if (gameController.GetEtapa().Equals(1))
+            {
+                if (next)
+                {
+                    Camera.main.GetComponent<Animator>().SetBool("back", true);
+                    gameController.SetEtapa(1);
+                    myParent.SetActive(false);
+                    Etapa1.SetActive(false);
+                    Etapa2.SetActive(true);
+                    gameController.NewProps();
+                    gameController.OnCreate();
+                }
+                else
+                {
+                    Application.LoadLevel(Application.loadedLevel);
+                }
+            }
+            else
+            {
+                if (next)
+                {
+                    Application.LoadLevel(0);
+                }
+                else
+                {
+                    Application.LoadLevel(Application.loadedLevel);
+                }
+            }
         }
+  
     }
     public void OnPointerUp(PointerEventData eventData)
     {

@@ -12,6 +12,8 @@ public class BoxScript : MonoBehaviour {
     [SerializeField]
     private TutorialFirst tutorial;
     [SerializeField]
+    private Tutorial tutorial_;
+    [SerializeField]
     private string myType;
     [SerializeField]
     private GameObject ballon;
@@ -52,6 +54,9 @@ public class BoxScript : MonoBehaviour {
                 if (gameController.props.y < 8)
                 {
                     gameController.props.y++;
+                    if(Tutorial.inTuto)
+                        gameController.props.y+=5;
+
                     bars[1].PosDesactive();
                     tutorial.ChangeFace(true);
                 }
@@ -84,8 +89,15 @@ public class BoxScript : MonoBehaviour {
 
         if (totalMoney <= 0 || gameController.props.z > 7 && gameController.props.x > 7 && gameController.props.y > 7)
         {
-            Camera.main.GetComponent<Animator>().SetBool("back", false);
-            Invoke("Ballon", 1f);
+            if (gameController.GetEtapa().Equals(0))
+            {
+                tutorial_.CompleteBag();
+            }
+            else
+            {
+                Camera.main.GetComponent<Animator>().SetBool("back", false);
+                Invoke("Ballon", 1f);
+            }
         }
     }
     void Ballon()
