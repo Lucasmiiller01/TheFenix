@@ -42,6 +42,8 @@ public class GameController : MonoBehaviour
     private Vector3[] preValues = new Vector3[3];
     [SerializeField]
     private GameObject ballon;
+
+    static public int[] aswers;
     public Color color;
     public Color nColor;
     public bool fade;
@@ -52,6 +54,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         papersOrder = new int[4, 5];
+        aswers = new int[3];
         papersOrder[0, 0] = 0; papersOrder[0, 1] = 1; papersOrder[0, 2] = 2; papersOrder[0, 3] = 3; papersOrder[0, 4] = 4;
         papersOrder[1, 0] = 3; papersOrder[1, 1] = 2; papersOrder[1, 2] = 0; papersOrder[1, 3] = 1; papersOrder[1, 4] = 4;
         papersOrder[2, 0] = 4; papersOrder[2, 1] = 0; papersOrder[2, 2] = 1; papersOrder[2, 3] = 2; papersOrder[2, 4] = 3;
@@ -87,14 +90,19 @@ public class GameController : MonoBehaviour
     }
     public int SetEtapa(int value)
     {
+        updateProps = false;
         return Etapa += value;
+
     }
 
     void Update ()
     {
         if (Etapa > 0 && !updateProps)
         {
-            NewProps();
+            if(Etapa.Equals(2))
+                props = preValues[4];
+            else
+                NewProps();
             updateProps = true;
         }
         else if(!updateProps)

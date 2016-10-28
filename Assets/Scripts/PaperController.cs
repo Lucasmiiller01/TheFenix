@@ -24,11 +24,29 @@ public class PaperController : MonoBehaviour {
     }
     void ActivedStamps()
     {
-        if (effectsProps.x > 0) Stamps[0].SetActive (true);
-        else Stamps[0].SetActive(false);
-        if (effectsProps.y > 0) Stamps[1].SetActive(true);
-        else Stamps[1].SetActive(false);
-        if (effectsProps.z > 0) Stamps[2].SetActive(true);
-         else Stamps[2].SetActive(false);
+        if (effectsProps.x != 0)
+        {
+            Stamps[0].SetActive(true);
+            if (effectsProps.x > 0)
+                Stamps[3].SetActive(true);
+            else
+                Stamps[4].SetActive(true);
+        }
+        if (effectsProps.y != 0)
+        {
+            Stamps[1].SetActive(true);
+            if (effectsProps.y > 0)
+                Stamps[3].SetActive(true);
+            else
+                Stamps[4].SetActive(true);
+        }
+        if (effectsProps.z != 0)
+        {
+            Stamps[2].SetActive(true);
+            if (effectsProps.z > 0)
+                Stamps[3].SetActive(true);
+            else
+                Stamps[4].SetActive(true);
+        }
     }
 }

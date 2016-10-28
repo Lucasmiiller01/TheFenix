@@ -10,6 +10,8 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private GameController gameController;
     [SerializeField]
+    private Selector i;
+    [SerializeField]
     private GameObject myParent;
     [SerializeField]
     private GameObject Etapa1;
@@ -72,7 +74,7 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 if (next)
                 {
-                    Application.LoadLevel(0);
+                    Application.LoadLevel(2);
                 }
                 else
                 {
@@ -82,6 +84,7 @@ public class InputButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     Etapa2.SetActive(true);
                     gameController.NewProps();
                     gameController.OnCreate();
+                    i.Resetao();
 
                     Camera.main.GetComponent<Animator>().SetBool("back", true);
                 }

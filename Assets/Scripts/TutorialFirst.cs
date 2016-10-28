@@ -13,6 +13,8 @@ public class TutorialFirst : MonoBehaviour {
     [SerializeField]
     private GameObject nextLv;
     [SerializeField]
+    private GameController gc;
+    [SerializeField]
     private string[] tutTexts;
 
     public void ChangeFace(bool happy)
@@ -35,21 +37,35 @@ public class TutorialFirst : MonoBehaviour {
         {
             myImage.sprite = sprites[2];
             tut.text = tutTexts[0];
+            if(gc.GetEtapa().Equals(2))
+                tut.text = tutTexts[4];
+            nextLv.SetActive(true);
         }
         else if (props.z > 6 && props.x > 6 && props.y > 6)
         {
             myImage.sprite = sprites[1];
             tut.text = tutTexts[1];
+            if (gc.GetEtapa().Equals(2))
+                tut.text = tutTexts[5];
+            nextLv.SetActive(true);
         }
         else if (props.z > 4 && props.x > 4 && props.y > 4)
         {
             myImage.sprite = sprites[0];
             tut.text = tutTexts[2];
+            nextLv.SetActive(true);
+            if (gc.GetEtapa().Equals(2))
+            {
+                tut.text = tutTexts[6];
+                nextLv.SetActive(false);
+            }
         }
         else
         {
             myImage.sprite = sprites[3];
             tut.text = tutTexts[3];
+            if (gc.GetEtapa().Equals(2))
+                tut.text = tutTexts[7];
             nextLv.SetActive(false);
         }
     }

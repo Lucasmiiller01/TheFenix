@@ -19,18 +19,31 @@ public class Selector : MonoBehaviour {
     private GameObject paper;
     private Vector3 mousePos;
     private Vector3 inicialPos;
-
+    private int lifes;
 
     [SerializeField]
     private GameController gameController;
     [SerializeField]
-    private GameObject feedback;
+    private GameObject[] strols;
     public static Vector3 auxProps;
     public static float multCooldown;
+    public static int actual;
 
     void Start ()
     {      
         inicialPos = this.transform.position;
+        actual = 0;
+        Resetao();
+    }
+
+    public void Resetao()
+    {
+        actual = 0;
+        GameController.aswers = new int[3];
+        foreach(GameObject s in strols)
+        {
+            s.SetActive(false);
+        }
     }
 
     #region DropObject
@@ -143,17 +156,10 @@ public class Selector : MonoBehaviour {
     {
         if (paper != null) quit = true;
     }
-
-    void DesactivedFeedback()
-    {
-        feedback.SetActive(false);
-    }
+    
 
     private void PropsAffect()
     {
-        feedback.SetActive(true);
-        Invoke("DesactivedFeedback", 0.3f);
-        
         if (this.aprove)
         {
             gameController.props += paper.GetComponent<PaperController>().GetEffectsProps();
@@ -161,36 +167,156 @@ public class Selector : MonoBehaviour {
             {
                 bars[0].PosDesactive();
                 tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if(actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
             }
             if (paper.GetComponent<PaperController>().GetEffectsProps().x < 0)
             {
                 bars[0].DecDesactive();
                 tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
             }
             if (gameController.props.y < 8 && paper.GetComponent<PaperController>().GetEffectsProps().y > 0)
             {
                 bars[1].PosDesactive();
                 tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if (actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
             }
             if (paper.GetComponent<PaperController>().GetEffectsProps().y < 0)
             {
                 bars[1].DecDesactive();
                 tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
             }
             if (gameController.props.z < 8 && paper.GetComponent<PaperController>().GetEffectsProps().z > 0)
             {
                 bars[2].PosDesactive();
                 tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if (actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
             }
             if (paper.GetComponent<PaperController>().GetEffectsProps().z < 0)
             {
                 bars[2].DecDesactive();
                 tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
             }
             if (!gameController.checkProps) gameController.checkProps = true;
             // gameController.UpFeedBack();
             auxProps = Vector3.zero;
         }
+        else
+        {
+            if (gameController.props.x < 8 && paper.GetComponent<PaperController>().GetEffectsProps().x > 0)
+            {
+                tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().x < 0)
+            {
+                tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if (actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
+            }
+            if (gameController.props.y < 8 && paper.GetComponent<PaperController>().GetEffectsProps().y > 0)
+            {
+                tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().y < 0)
+            {
+                tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if (actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
+            }
+            if (gameController.props.z < 8 && paper.GetComponent<PaperController>().GetEffectsProps().z > 0)
+            {
+                tutorial.ChangeFace(false);
+                GameController.aswers[actual] = 0;
+                if (actual.Equals(0))
+                    strols[1].SetActive(true);
+                if (actual.Equals(1))
+                    strols[3].SetActive(true);
+                if (actual.Equals(2))
+                    strols[5].SetActive(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().z < 0)
+            {
+                tutorial.ChangeFace(true);
+                GameController.aswers[actual] = 1;
+                if (actual.Equals(0))
+                    strols[0].SetActive(true);
+                if (actual.Equals(1))
+                    strols[2].SetActive(true);
+                if (actual.Equals(2))
+                    strols[4].SetActive(true);
+            }
+        }
+        if ((GameController.aswers[0] + GameController.aswers[1] + GameController.aswers[2]).Equals(3))
+            tutorial.ChangeFinal(Vector3.one * 8);
+        if ((GameController.aswers[0] + GameController.aswers[1] + GameController.aswers[2]).Equals(2))
+            tutorial.ChangeFinal(Vector3.one * 7);
+        if ((GameController.aswers[0] + GameController.aswers[1] + GameController.aswers[2]).Equals(1))
+            tutorial.ChangeFinal(Vector3.one * 5);
+        if ((GameController.aswers[0] + GameController.aswers[1] + GameController.aswers[2]).Equals(0))
+            tutorial.ChangeFinal(Vector3.one * 0);
+        actual++;
     }
 
     private void FollowMouse(Transform i)
