@@ -39,6 +39,7 @@ public class Tutorial : MonoBehaviour
         textBox[0].text = texts[0];
         ActualizeTutorial();
 
+
     }
 	
 	// Update is called once per frame

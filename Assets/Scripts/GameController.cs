@@ -53,6 +53,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        Tutorial.inTuto = true;
+        Tutorial.inTuto2 = true;
         papersOrder = new int[4, 5];
         aswers = new int[3];
         papersOrder[0, 0] = 0; papersOrder[0, 1] = 1; papersOrder[0, 2] = 2; papersOrder[0, 3] = 3; papersOrder[0, 4] = 4;
