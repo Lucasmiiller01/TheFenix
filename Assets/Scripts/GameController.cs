@@ -33,6 +33,8 @@ public class GameController : MonoBehaviour
     private SpriteRenderer backGround;
     [SerializeField]
     private SpriteRenderer[] clouds;
+    [SerializeField]
+    private Vector3[] preValues = new Vector3[3];
     public Color color;
     public Color nColor;
     public bool fade;
@@ -43,9 +45,9 @@ public class GameController : MonoBehaviour
         fade = false;
         checkProps = true;
         inGame = true;
-        InvokeRepeating("DecreaseProps", 10f, 10f);
-        InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
-        props = new Vector3(Random.Range(50, 90), Random.Range(50, 90), Random.Range(50, 90));
+        //InvokeRepeating("DecreaseProps", 10f, 10f);
+        //InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
+        props = preValues[Random.Range(0,3)];
         FinaleDay = false;
    
     }

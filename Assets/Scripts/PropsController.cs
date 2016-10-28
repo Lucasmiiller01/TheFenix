@@ -60,97 +60,73 @@ public class PropsController : MonoBehaviour {
             switch (myType)
             {
                 case "Hospital":
-                    if (gameController.props.x >= 80)
+                    if (gameController.props.x >= 8)
                     {
                         if (this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                         if (protest.activeSelf) protest.SetActive(false);
                     }
-                    else if (gameController.props.x <= 80 && gameController.props.x >= 60)
+                    else if (gameController.props.x < 8 && gameController.props.x >= 6)
                     {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[0]) this.GetComponent<SpriteRenderer>().sprite = sprites[0];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[1]) this.GetComponent<SpriteRenderer>().sprite = sprites[1];
                   
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                         if (protest.activeSelf) protest.SetActive(false);
                     }
-                    else if (gameController.props.x < 60 && gameController.props.x >= 30)
+                    else if (gameController.props.x < 6)
                     {
                        
-                            this.GetComponent<SpriteRenderer>().sprite = sprites[1];
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[2];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                        
                             if (!protest.activeSelf) protest.SetActive(true);
   
                     }
-
-                    else if (gameController.props.x < 30)
-                    {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[2]) this.GetComponent<SpriteRenderer>().sprite = sprites[2];
-                
-                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        if (!protest.activeSelf) protest.SetActive(true);
-                    }
                     break;
                 case "School":
-                    if (gameController.props.y >= 80)
+                    if (gameController.props.y >= 8)
                     {
                         if (this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                         if (protest.activeSelf) protest.SetActive(false);
                     }
-                    else if (gameController.props.y <= 80 && gameController.props.y >= 60)
+                    else if (gameController.props.y < 8 && gameController.props.y >= 6)
                     {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[3]) this.GetComponent<SpriteRenderer>().sprite = sprites[3];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[4]) this.GetComponent<SpriteRenderer>().sprite = sprites[4];
                       
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                         if (protest.activeSelf) protest.SetActive(false);
 
                     }
-                    else if (gameController.props.y < 60 && gameController.props.y >= 30)
+                    else if (gameController.props.y < 6)
                     {
                         
-                            this.GetComponent<SpriteRenderer>().sprite = sprites[4];
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[5];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                             if (!protest.activeSelf) protest.SetActive(true);
-
-
-                    }
-                    else if (gameController.props.y < 30)
-                    {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[5]) this.GetComponent<SpriteRenderer>().sprite = sprites[5];
-            
-                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        if (!protest.activeSelf) protest.SetActive(true);
                     }
                   
                     break;
                 case "Police":
-                    if (gameController.props.z >= 80)
+                    if (gameController.props.z >= 8)
                     {
                         if (this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
                       
                         if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                         if (protest.activeSelf) protest.SetActive(false);
                     }
-                    else if (gameController.props.z <= 80 && gameController.props.z >= 60)
+                    else if (gameController.props.z <= 8 && gameController.props.z >= 6)
                     {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[6]) this.GetComponent<SpriteRenderer>().sprite = sprites[6];
+                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[7]) this.GetComponent<SpriteRenderer>().sprite = sprites[7];
                       
                         if (protest.activeSelf) protest.SetActive(false);
                     }
-                    else if (gameController.props.z < 60 && gameController.props.z >= 30)
+                    else if (gameController.props.z < 6)
                     {
-                            this.GetComponent<SpriteRenderer>().sprite = sprites[7];
+                            this.GetComponent<SpriteRenderer>().sprite = sprites[8];
                             if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
                             if (!protest.activeSelf) protest.SetActive(true);
 
-                    }
-                    else if (gameController.props.z < 30)
-                    {
-                        if (this.GetComponent<SpriteRenderer>().sprite != sprites[8]) this.GetComponent<SpriteRenderer>().sprite = sprites[8];
-                       
-                        if (this.GetComponent<Animator>().enabled) this.GetComponent<Animator>().enabled = false;
-                        if (!protest.activeSelf) protest.SetActive(true);
                     }
                     break;
             }
