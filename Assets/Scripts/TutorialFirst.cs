@@ -11,6 +11,8 @@ public class TutorialFirst : MonoBehaviour {
     [SerializeField]
     private Text tut;
     [SerializeField]
+    private GameObject nextLv;
+    [SerializeField]
     private string[] tutTexts;
 
     public void ChangeFace(bool happy)
@@ -48,6 +50,7 @@ public class TutorialFirst : MonoBehaviour {
         {
             myImage.sprite = sprites[3];
             tut.text = tutTexts[3];
+            nextLv.SetActive(false);
         }
     }
 

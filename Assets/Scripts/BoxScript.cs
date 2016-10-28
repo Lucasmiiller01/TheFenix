@@ -41,8 +41,8 @@ public class BoxScript : MonoBehaviour {
                 }
                 else
                 {
-                    gameController.props.y--;
-                    gameController.props.z--;
+                    if (gameController.props.y > 4) gameController.props.y--;
+                    if (gameController.props.z > 4) gameController.props.z--;
                     bars[1].DecDesactive();
                     bars[2].DecDesactive();
                     tutorial.ChangeFace(false);
@@ -57,8 +57,8 @@ public class BoxScript : MonoBehaviour {
                 }
                 else
                 {
-                    gameController.props.x--;
-                    gameController.props.z--;
+                    if (gameController.props.x > 4) gameController.props.x--;
+                    if (gameController.props.z > 4) gameController.props.z--;
                     bars[0].DecDesactive();
                     bars[2].DecDesactive();
                     tutorial.ChangeFace(false);
@@ -73,8 +73,8 @@ public class BoxScript : MonoBehaviour {
                 }
                 else
                 {
-                    gameController.props.x--;
-                    gameController.props.y--;
+                    if (gameController.props.x > 4) gameController.props.x--;
+                    if(gameController.props.y > 4) gameController.props.y--;
                     bars[0].DecDesactive();
                     bars[1].DecDesactive();
                     tutorial.ChangeFace(false);
@@ -84,7 +84,7 @@ public class BoxScript : MonoBehaviour {
 
         if (totalMoney <= 0 || gameController.props.z > 7 && gameController.props.x > 7 && gameController.props.y > 7)
         {
-            Camera.main.GetComponent<Animator>().enabled = true;
+            Camera.main.GetComponent<Animator>().SetBool("back", false);
             Invoke("Ballon", 1f);
         }
     }

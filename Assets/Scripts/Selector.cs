@@ -4,21 +4,22 @@ using UnityEngine.UI;
 
 public class Selector : MonoBehaviour {
 
-    private bool isSelect, onPaper, isMarked;
+    private bool isSelect, onPaper;
     public static bool quit;
 
     [SerializeField]
-    private string myType; 
+    private bool aprove;
+    [SerializeField]
+    private string myType;
+    [SerializeField]
+    private BarController[] bars;
+    [SerializeField]
+    private TutorialFirst tutorial;
 
     private GameObject paper;
     private Vector3 mousePos;
     private Vector3 inicialPos;
 
-    [SerializeField]
-    private bool cooldown;
-
-    [SerializeField]
-    private float timeCollDown;
 
     [SerializeField]
     private GameController gameController;
@@ -26,8 +27,7 @@ public class Selector : MonoBehaviour {
     public static float multCooldown;
 
     void Start ()
-    {
-        cooldown = false;        
+    {      
         inicialPos = this.transform.position;
     }
 
@@ -37,48 +37,14 @@ public class Selector : MonoBehaviour {
         isSelect = false;
         gameController.isPick = false;
         // Cursor.visible = true;
-        if (onPaper && !cooldown && !quit)
+        if (onPaper && !quit)
         {
             switch (myType)
             {
-                case "Cheers":
-                    if (paper != null && !paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled)
-                    {
-                        paper.transform.GetChild(2).transform.position = this.transform.position;
-                        paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(Random.Range(10,30), auxProps.y, auxProps.z);
-                        isMarked = true;
-                        multCooldown++;
-                    }
-                    break;
-                case "Education":
-                    if (paper != null && !paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled)
-                    {
-                        paper.transform.GetChild(1).transform.position = this.transform.position;
-                        paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(auxProps.x, Random.Range(10, 30), auxProps.z);
-                        isMarked = true;
-                        multCooldown++;
-                    }
-                    break;
-                case "Safety":
-                    if (paper != null && !paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled)
-                    {
-                        paper.transform.GetChild(0).transform.position = this.transform.position;
-                        paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-                        auxProps = new Vector3(auxProps.x, auxProps.y, Random.Range(10, 30));
-                        isMarked = true;
-                        multCooldown++;
-                    }
-                    break;
                 case "Stamp":
-                    if (paper != null && !paper.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled && !paper.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled)
-                        break;
-                    else
-                    {
                         QuitScreen();
                         PropsAffect();
-                    }
+   
                     break;
             }
         }
@@ -111,23 +77,16 @@ public class Selector : MonoBehaviour {
     {
         if(!gameController.FinaleDay && !gameController.fade)
         {
-             if (!cooldown)
-                RayCast();
+             RayCast();
 
-            if (isSelect && !cooldown)
+            if (isSelect)
             {
                 FollowMouse();
                 if (Input.GetMouseButtonUp(0)) DropObject();
             }
             if(!isSelect)
                 this.transform.position = Vector2.Lerp(this.transform.position, inicialPos, 0.05f);
-            if (quit && isMarked)
-            {
-                isMarked = false;
-                cooldown = true;
-                Invoke("Block", timeCollDown * multCooldown);
-                this.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1);
-            }
+         
 
             if (paper != null && quit.Equals(true) && myType.Equals("Stamp"))
                 if(paper.transform.position.x < 14)
@@ -138,7 +97,6 @@ public class Selector : MonoBehaviour {
                 paper = null;
                 gameController.OnCreate();
                 quit = false;
-                multCooldown = 0;
             }
         }
     }
@@ -186,11 +144,43 @@ public class Selector : MonoBehaviour {
 
     private void PropsAffect()
     {
-        gameController.props += auxProps;
-        if (!gameController.checkProps) gameController.checkProps = true;
-        gameController.UpFeedBack();
-        auxProps = Vector3.zero;
-     
+        if (this.aprove)
+        {
+            gameController.props += paper.GetComponent<PaperController>().GetEffectsProps();
+            if (gameController.props.x < 8 && paper.GetComponent<PaperController>().GetEffectsProps().x > 0)
+            {
+                bars[0].PosDesactive();
+                tutorial.ChangeFace(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().x < 0)
+            {
+                bars[0].DecDesactive();
+                tutorial.ChangeFace(false);
+            }
+            if (gameController.props.y < 8 && paper.GetComponent<PaperController>().GetEffectsProps().y > 0)
+            {
+                bars[1].PosDesactive();
+                tutorial.ChangeFace(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().y < 0)
+            {
+                bars[1].DecDesactive();
+                tutorial.ChangeFace(false);
+            }
+            if (gameController.props.z < 8 && paper.GetComponent<PaperController>().GetEffectsProps().z > 0)
+            {
+                bars[2].PosDesactive();
+                tutorial.ChangeFace(true);
+            }
+            if (paper.GetComponent<PaperController>().GetEffectsProps().z < 0)
+            {
+                bars[2].DecDesactive();
+                tutorial.ChangeFace(false);
+            }
+            if (!gameController.checkProps) gameController.checkProps = true;
+            // gameController.UpFeedBack();
+            auxProps = Vector3.zero;
+        }
     }
 
     private void FollowMouse(Transform i)
@@ -217,9 +207,5 @@ public class Selector : MonoBehaviour {
     }
     #endregion
 
-    private void Block()
-    {
-        cooldown = false;
-        this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-    }
+   
 }

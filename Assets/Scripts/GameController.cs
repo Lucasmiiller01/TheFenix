@@ -6,6 +6,9 @@ using System.Collections.Generic;
 public class GameController : MonoBehaviour
 {
     private int seconds;
+    private int[,] papersOrder;
+    private int myOrder;
+    private int actualPaper;
     private int minutes;
     private bool inGame;
     public bool isPick;
@@ -35,13 +38,23 @@ public class GameController : MonoBehaviour
     private SpriteRenderer[] clouds;
     [SerializeField]
     private Vector3[] preValues = new Vector3[3];
+    [SerializeField]
+    private GameObject ballon;
     public Color color;
     public Color nColor;
     public bool fade;
-  
+    private int Etapa;
+
 
     void Start()
     {
+        papersOrder = new int[4, 5];
+        papersOrder[0, 0] = 0; papersOrder[0, 1] = 1; papersOrder[0, 2] = 2; papersOrder[0, 3] = 3; papersOrder[0, 4] = 4;
+        papersOrder[1, 0] = 3; papersOrder[1, 1] = 2; papersOrder[1, 2] = 0; papersOrder[1, 3] = 1; papersOrder[1, 4] = 4;
+        papersOrder[2, 0] = 4; papersOrder[2, 1] = 0; papersOrder[2, 2] = 1; papersOrder[2, 3] = 2; papersOrder[2, 4] = 3;
+        papersOrder[3, 0] = 2; papersOrder[3, 1] = 3; papersOrder[3, 2] = 4; papersOrder[3, 3] = 0; papersOrder[3, 4] = 1;
+        myOrder = Random.Range(0, 4);
+        actualPaper = 0;
         fade = false;
         checkProps = true;
         inGame = true;
@@ -49,34 +62,21 @@ public class GameController : MonoBehaviour
         //InvokeRepeating("DecreasePropsFeedBack", 3f, 2f);
         props = preValues[Random.Range(0,3)];
         FinaleDay = false;
+        Etapa = 1;
    
+    }
+    public int GetEtapa() {
+        return Etapa;
+
+    }
+    public int SetEtapa(int value)
+    {
+        return Etapa += value;
+
     }
 
     void Update ()
     {
-        /*if (night && !FinaleDay && fadeManager.actived)
-        {
-            if (backGround.color != color) backGround.color = color;
-            if (clouds[0].color != nColor)
-            {
-                for (int i = 0; i < clouds.Length; i++)
-                {
-                    clouds[i].color = nColor;
-                }
-            }
-        }
-        else
-        {
-            if (backGround.color != Color.white) backGround.color = Color.white;
-            if (clouds[0].color != Color.white)
-            {
-                for (int i = 0; i < clouds.Length; i++)
-                {
-                    clouds[i].color = Color.white;
-                }
-            }
-
-        }*/
         if (!FinaleDay && !fade)
         {
            
@@ -95,15 +95,21 @@ public class GameController : MonoBehaviour
   
     public void OnCreate()
     {
-        if (!FinaleDay && !fade)
+        if (actualPaper < 3)
         {
-           instancePaper = (GameObject) Instantiate(paper);
-           instancePaper.transform.parent = game.transform;
-           instancePaper.transform.localPosition = new Vector3(-20, paper.transform.position.y, 0);
-           created = true;
+            instancePaper = (GameObject)Instantiate(paper);
+            instancePaper.transform.parent = game.transform;
+            instancePaper.transform.localPosition = new Vector3(-20, paper.transform.position.y, 0);
+            instancePaper.GetComponent<PaperController>().SetValue(papersOrder[myOrder, actualPaper]);
+            actualPaper++;
+            created = true;
+        }
+        else
+        {
+            ballon.SetActive(true);
         }
     }
-    public void UpFeedBack()
+   /* public void UpFeedBack()
     {
         if (!FinaleDay && !fade)
         {
@@ -148,7 +154,7 @@ public class GameController : MonoBehaviour
                 instanceMessage.transform.position = new Vector2(stats[i].transform.position.x +1, stats[i].transform.position.y);
             }
         }
-    }
+    }*/
     void DecreasePropsFeedBack()
     {
         if (!FinaleDay && !fade)
@@ -186,7 +192,6 @@ public class GameController : MonoBehaviour
         if (!FinaleDay && !fade)
         {
             props -= new Vector3(10, 10, 10);
-            DecreaseFeedBack();
             if (!checkProps) checkProps = true;
         }
 

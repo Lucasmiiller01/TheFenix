@@ -106,7 +106,6 @@ public class MoneyManager : MonoBehaviour {
     {
         gameController.props += auxProps;
         if (!gameController.checkProps) gameController.checkProps = true;
-        gameController.UpFeedBack();
         auxProps = Vector3.zero;
 
     }
